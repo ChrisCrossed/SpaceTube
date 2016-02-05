@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Avatar : MonoBehaviour {
+public class Avatar : MonoBehaviour
+{
 
-	public ParticleSystem trail, burst;
+    public ParticleSystem trail, burst;
 
     public Renderer Body, Booster;
-	private Player player;
+    public Player player;
 
-	public float deathCountdown = -1f;
+    public float deathCountdown = -1f;
     public float HP;
 
     public float currentHP;
@@ -21,60 +22,65 @@ public class Avatar : MonoBehaviour {
 
     private void Start()
     {
+
+    }
+
+    private void OnEnable()
+    {
         currentHP = HP;
         isDead = false;
         fHits = 0;
-    }
-    private void Awake ()
-    {
-		player = transform.root.GetComponent<Player>();
+        ParticleSystem.EmissionModule emTrail = trail.emission;
+        emTrail.enabled = true;
         GetComponent<BoxCollider>().enabled = true;
     }
 
-	private void OnTriggerEnter (Collider collider)
+    private void OnTriggerEnter(Collider collider)
     {
         --currentHP;
         ++fHits;
         burst.Emit(30);
         StartCoroutine(ShipHit());
-        //StartCoroutine(TimedInvincibility(1));
         StartCoroutine(ShipFlash());
         Shake.Shake();
         hud.OnHit(fHits);
 
         if (currentHP <= 0 && isDead == false)
         {
-            trail.enableEmission = false;
+            ParticleSystem.EmissionModule emTrail = trail.emission;
+            emTrail.enabled = false;
             GetComponent<BoxCollider>().enabled = false;
             burst.Emit(burst.maxParticles);
             deathCountdown = burst.startLifetime;
             isDead = true;
         }
 
-	}
-	
-	private void Update ()
+    }
+
+    private void Update()
     {
         hud.SetHP(currentHP);
-		if (isDead)
+        if (isDead)
         {
-			deathCountdown -= Time.deltaTime;
-			if (deathCountdown <= 0f)
+            deathCountdown -= Time.deltaTime;
+            if (deathCountdown <= 0f)
             {
-				deathCountdown = -1f;
-				trail.enableEmission = true;
-				player.Die();
+                deathCountdown = -1f;
+
+                ParticleSystem.EmissionModule emTrail = trail.emission;
+                emTrail.enabled = false;
+                GetComponent<BoxCollider>().enabled = false;
                 currentHP = HP;
                 isDead = false;
                 fHits = 0;
                 hud.HudReset();
-                
+                player.Die();
             }
-		}
+        }
 
+        //Glen What the fuck
         if (Input.GetKeyUp(KeyCode.L))
         {
-
             BoxCollider Jim = GetComponent<BoxCollider>();
 
             if (Jim.enabled == false)
@@ -83,15 +89,12 @@ public class Avatar : MonoBehaviour {
                 Jim.enabled = true;
 
             }
-            else if(Jim.enabled == true)
+            else if (Jim.enabled == true)
             {
                 //print("off collider " + Jim.enabled);
                 Jim.enabled = false;
-
             }
-
         }
-
     }
 
     IEnumerator ShipHit()
@@ -103,13 +106,6 @@ public class Avatar : MonoBehaviour {
 
         // Tell the player they took a hit (Used for Achievements)
         player.GetComponent<Player>().HitObject();
-    }
-
-    IEnumerator TimedInvincibility(float fIFrames)
-    {
-        GetComponent<BoxCollider>().enabled = false;
-        yield return new WaitForSeconds(fIFrames);
-        GetComponent<BoxCollider>().enabled = true;
     }
 
     IEnumerator ShipFlash()
@@ -124,11 +120,12 @@ public class Avatar : MonoBehaviour {
         Booster.enabled = false;
         Body.enabled = false;
         yield return new WaitForSeconds(0.25f);
+
         if (!isDead)
         {
             GetComponent<BoxCollider>().enabled = true;
             Booster.enabled = true;
             Body.enabled = true;
-        }     
+        }
     }
 }

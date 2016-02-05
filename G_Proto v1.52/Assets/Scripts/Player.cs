@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
 		hud.SetValues(distanceTraveled, velocity);
         mrBooster.enabled = true;
         mrCarRender.enabled = true;
+        mrCollider.enabled = true;
 	}
 
 	public void Die ()
@@ -65,7 +66,7 @@ public class Player : MonoBehaviour
         StartCoroutine(End(distanceTraveled));
 
         // Pass along this live's score to the RewardSystem
-        // gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.HighScore, (int)(distanceTraveled * 10));
+        gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.HighScore, (int)(distanceTraveled * 10));
     }
 
 	private void Awake () {
@@ -78,8 +79,8 @@ public class Player : MonoBehaviour
 
     public void HitObject()
     {
-        // Pass to the RewardSystem that they took a hit - DISABLED while fixing basic Scoreboard details
-        // gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.LongestLife, (int)(distanceTraveled_OneLife * 10));
+        // Pass to the RewardSystem that they took a hit
+        gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.LongestLife, (int)(distanceTraveled_OneLife * 10));
         distanceTraveled_OneLife = 0f;
     }
 
@@ -87,12 +88,6 @@ public class Player : MonoBehaviour
     {
 		velocity += acceleration * Time.deltaTime;
 		float delta = velocity * Time.deltaTime;
-
-        // CHEAT CODE: Increase score
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            distanceTraveled += 100;
-        }
 
         // Store the current distance travelled.
         distanceTraveled += delta;
@@ -136,8 +131,8 @@ public class Player : MonoBehaviour
             {
                 CheckPointHit = true;
                 hud.CheckPoint();
-            }   
-        }
+            }                      
+        }             
 	}
 
 	private void UpdateAvatarRotation ()

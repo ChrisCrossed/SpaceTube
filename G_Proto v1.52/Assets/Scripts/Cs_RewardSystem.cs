@@ -7,20 +7,6 @@ public enum AchievementTypes
     LongestLife,
 }
 
-public class ScoreboardInfo
-{
-    public string Name_1st;
-    public string Name_2nd;
-    public string Name_3rd;
-    public string Name_4th;
-    public string Name_5th;
-    public uint Score_1st;
-    public uint Score_2nd;
-    public uint Score_3rd;
-    public uint Score_4th;
-    public uint Score_5th;
-}
-
 /*******************************************************************************
 filename    Cs_RewardSystem.cpp
 author      Christopher Christensen
@@ -37,25 +23,9 @@ public class Cs_RewardSystem : MonoBehaviour
     uint ui_HighScore;
     uint ui_HighScore_LongestLife;
 
-    string Name_1st = "Alpha";
-    string Name_2nd = "Beta";
-    string Name_3rd = "Charlie";
-    string Name_4th = "Echo";
-    string Name_5th = "Delta";
-    uint Score_1st = 1000;
-    uint Score_2nd = 900;
-    uint Score_3rd = 800;
-    uint Score_4th = 700;
-    uint Score_5th = 600;
-
-    // Packages the info to pass externally
-    ScoreboardInfo scoreboardInfo;
-
 	// Use this for initialization
 	void Start ()
     {
-        scoreboardInfo = new ScoreboardInfo();
-
         LoadRewardsFromFile();
 	}
 	
@@ -76,39 +46,8 @@ public class Cs_RewardSystem : MonoBehaviour
     *******************************************************************************/
     void LoadRewardsFromFile()
     {
-        // ui_HighScore =              (uint)PlayerPrefs.GetInt("HighScore");
-        // ui_HighScore_LongestLife =  (uint)PlayerPrefs.GetInt("HighScore_LongestLife");
-
-        if (PlayerPrefs.HasKey("Name_1st"))
-        {
-            Name_1st = PlayerPrefs.GetString("Name_1st");
-            Name_2nd = PlayerPrefs.GetString("Name_2nd");
-            Name_3rd = PlayerPrefs.GetString("Name_3rd");
-            Name_4th = PlayerPrefs.GetString("Name_4th");
-            Name_5th = PlayerPrefs.GetString("Name_5th");
-
-            Score_1st = (uint)PlayerPrefs.GetInt("Score_1st");
-            Score_2nd = (uint)PlayerPrefs.GetInt("Score_2nd");
-            Score_3rd = (uint)PlayerPrefs.GetInt("Score_3rd");
-            Score_4th = (uint)PlayerPrefs.GetInt("Score_4th");
-            Score_5th = (uint)PlayerPrefs.GetInt("Score_5th");
-        }
-        else
-        {
-            scoreboardInfo.Name_1st = Name_1st;
-            scoreboardInfo.Name_2nd = Name_2nd;
-            scoreboardInfo.Name_3rd = Name_3rd;
-            scoreboardInfo.Name_4th = Name_4th;
-            scoreboardInfo.Name_5th = Name_5th;
-
-            scoreboardInfo.Score_1st = Score_1st;
-            scoreboardInfo.Score_2nd = Score_2nd;
-            scoreboardInfo.Score_3rd = Score_3rd;
-            scoreboardInfo.Score_4th = Score_4th;
-            scoreboardInfo.Score_5th = Score_5th;
-
-            SaveRewardsToFile();
-        }
+        ui_HighScore =              (uint)PlayerPrefs.GetInt("HighScore");
+        ui_HighScore_LongestLife =  (uint)PlayerPrefs.GetInt("HighScore_LongestLife");
     }
 
     /*******************************************************************************
@@ -122,44 +61,14 @@ public class Cs_RewardSystem : MonoBehaviour
     *******************************************************************************/
     void SaveRewardsToFile()
     {
-        // PlayerPrefs.SetInt("HighScore",             (int)ui_HighScore);
-        // PlayerPrefs.SetInt("HighScore_LongestLife", (int)ui_HighScore_LongestLife);
+        PlayerPrefs.SetInt("HighScore",             (int)ui_HighScore);
+        PlayerPrefs.SetInt("HighScore_LongestLife", (int)ui_HighScore_LongestLife);
 
-        print("Saving values");
+        print("Saving values: " + ui_HighScore + " " + ui_HighScore_LongestLife);
 
-        PlayerPrefs.SetString("Name_1st", scoreboardInfo.Name_1st);
-        PlayerPrefs.SetString("Name_2nd", scoreboardInfo.Name_2nd);
-        PlayerPrefs.SetString("Name_3rd", scoreboardInfo.Name_3rd);
-        PlayerPrefs.SetString("Name_4th", scoreboardInfo.Name_4th);
-        PlayerPrefs.SetString("Name_5th", scoreboardInfo.Name_5th);
 
-        PlayerPrefs.SetInt("Score_1st", (int)scoreboardInfo.Score_1st);
-        PlayerPrefs.SetInt("Score_2nd", (int)scoreboardInfo.Score_2nd);
-        PlayerPrefs.SetInt("Score_3rd", (int)scoreboardInfo.Score_3rd);
-        PlayerPrefs.SetInt("Score_4th", (int)scoreboardInfo.Score_4th);
-        PlayerPrefs.SetInt("Score_5th", (int)scoreboardInfo.Score_5th);
     }
 
-    public ScoreboardInfo GetScoreboardInfo()
-    {
-        scoreboardInfo = new ScoreboardInfo();
-
-        scoreboardInfo.Name_1st = Name_1st;
-        scoreboardInfo.Name_2nd = Name_2nd;
-        scoreboardInfo.Name_3rd = Name_3rd;
-        scoreboardInfo.Name_4th = Name_4th;
-        scoreboardInfo.Name_5th = Name_5th;
-
-        scoreboardInfo.Score_1st = Score_1st;
-        scoreboardInfo.Score_2nd = Score_2nd;
-        scoreboardInfo.Score_3rd = Score_3rd;
-        scoreboardInfo.Score_4th = Score_4th;
-        scoreboardInfo.Score_5th = Score_5th;
-
-        return scoreboardInfo;
-    }
-
-    #region SetRewardInformation Overloads
     /*******************************************************************************
         Function: SetRewardInformation
 
@@ -235,35 +144,6 @@ public class Cs_RewardSystem : MonoBehaviour
         // Store all data
         SaveRewardsToFile();
     }
-    #endregion
-
-    /*******************************************************************************
-    Function: SetScoreboardInformation
-
- Description: Receives the new Scoreboard information from external sources
-
-      Inputs: scoreboardInfo_ (ScoreboardInfo) - The new scoreboardinfo
-
-     Outputs: None
-*******************************************************************************/
-    public void SetScoreboardInformation(ScoreboardInfo scoreboardInfo_)
-    {
-        print("New 5th: " + scoreboardInfo_.Score_5th);
-
-        scoreboardInfo.Score_1st = scoreboardInfo_.Score_1st;
-        scoreboardInfo.Score_2nd = scoreboardInfo_.Score_2nd;
-        scoreboardInfo.Score_3rd = scoreboardInfo_.Score_3rd;
-        scoreboardInfo.Score_4th = scoreboardInfo_.Score_4th;
-        scoreboardInfo.Score_5th = scoreboardInfo_.Score_5th;
-
-        scoreboardInfo.Name_1st = scoreboardInfo_.Name_1st;
-        scoreboardInfo.Name_2nd = scoreboardInfo_.Name_2nd;
-        scoreboardInfo.Name_3rd = scoreboardInfo_.Name_3rd;
-        scoreboardInfo.Name_4th = scoreboardInfo_.Name_4th;
-        scoreboardInfo.Name_5th = scoreboardInfo_.Name_5th;
-
-        SaveRewardsToFile();
-    }
 
     /*******************************************************************************
     Function: ResetRewardValues
@@ -278,19 +158,6 @@ public class Cs_RewardSystem : MonoBehaviour
     {
         ui_HighScore = 0;
         ui_HighScore_LongestLife = 0;
-
-        scoreboardInfo = new ScoreboardInfo();
-
-        scoreboardInfo.Name_1st = "Alpha";
-        scoreboardInfo.Name_2nd = "Beta";
-        scoreboardInfo.Name_3rd = "Charlie";
-        scoreboardInfo.Name_4th = "Echo";
-        scoreboardInfo.Name_5th = "Delta";
-        scoreboardInfo.Score_1st = 1000;
-        scoreboardInfo.Score_2nd = 900;
-        scoreboardInfo.Score_3rd = 800;
-        scoreboardInfo.Score_4th = 700;
-        scoreboardInfo.Score_5th = 600;
 
         SaveRewardsToFile();
     }

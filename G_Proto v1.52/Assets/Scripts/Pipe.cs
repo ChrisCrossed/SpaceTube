@@ -10,9 +10,11 @@ public class Pipe : MonoBehaviour {
 	public float minCurveRadius, maxCurveRadius;
 	public int minCurveSegmentCount, maxCurveSegmentCount;
 
-	public PipeItemGenerator[] generators;
+    public GameObject[] generators;
+    //public Transform[]  timmy;
+    //public GameObject[] trimmy;
 
-	private float curveRadius;
+    private float curveRadius;
 	private int curveSegmentCount;
 
 	private Mesh mesh;
@@ -68,7 +70,7 @@ public class Pipe : MonoBehaviour {
 			Destroy(transform.GetChild(i).gameObject);
 		}
 		if (withItems) {
-			generators[Random.Range(0, generators.Length)].GenerateItems(this);
+			generators[Random.Range(0, generators.Length)].GetComponent<PipeItemGenerator>().GenerateItems(this);
 		}
 	}
 

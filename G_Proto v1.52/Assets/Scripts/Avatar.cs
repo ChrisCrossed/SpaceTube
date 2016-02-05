@@ -4,12 +4,12 @@ using System.Collections;
 public class Avatar : MonoBehaviour
 {
 
-    public ParticleSystem trail, burst;
+	public ParticleSystem trail, burst;
 
     public Renderer Body, Booster;
-    public Player player;
+	public Player player;
 
-    public float deathCountdown = -1f;
+	public float deathCountdown = -1f;
     public float HP;
 
     public float currentHP;
@@ -35,7 +35,7 @@ public class Avatar : MonoBehaviour
         GetComponent<BoxCollider>().enabled = true;
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerEnter (Collider collider)
     {
         --currentHP;
         ++fHits;
@@ -55,17 +55,17 @@ public class Avatar : MonoBehaviour
             isDead = true;
         }
 
-    }
-
-    private void Update()
+	}
+	
+	private void Update ()
     {
         hud.SetHP(currentHP);
         if (isDead)
         {
-            deathCountdown -= Time.deltaTime;
-            if (deathCountdown <= 0f)
+			deathCountdown -= Time.deltaTime;
+			if (deathCountdown <= 0f)
             {
-                deathCountdown = -1f;
+				deathCountdown = -1f;
 
                 ParticleSystem.EmissionModule emTrail = trail.emission;
                 emTrail.enabled = false;
@@ -76,9 +76,9 @@ public class Avatar : MonoBehaviour
                 hud.HudReset();
                 player.Die();
             }
-        }
+		}
 
-        //Glen What the fuck
+        //Glen What the Fuck
         if (Input.GetKeyUp(KeyCode.L))
         {
             BoxCollider Jim = GetComponent<BoxCollider>();
@@ -89,7 +89,7 @@ public class Avatar : MonoBehaviour
                 Jim.enabled = true;
 
             }
-            else if (Jim.enabled == true)
+            else if(Jim.enabled == true)
             {
                 //print("off collider " + Jim.enabled);
                 Jim.enabled = false;
@@ -121,11 +121,11 @@ public class Avatar : MonoBehaviour
         Body.enabled = false;
         yield return new WaitForSeconds(0.25f);
 
-        if (!isDead)
+        if(!isDead)
         {
             GetComponent<BoxCollider>().enabled = true;
             Booster.enabled = true;
             Body.enabled = true;
-        }
+        }    
     }
 }

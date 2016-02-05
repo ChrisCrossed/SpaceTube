@@ -7,8 +7,6 @@ public class ClickQuit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // Chris Test
-        // More Chris Test
         Cursor.visible = true;
     }
 

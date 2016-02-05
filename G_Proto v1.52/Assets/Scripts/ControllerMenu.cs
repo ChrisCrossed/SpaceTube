@@ -16,6 +16,7 @@ public class ControllerMenu : MonoBehaviour
 
     public PlayerIndex playerIndex;
     GamePadState state;
+    GamePadState prevState;
 
     // Use this for initialization
     void Start()
@@ -27,6 +28,7 @@ public class ControllerMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        prevState = state;
         state = GamePad.GetState(playerIndex);
         if (bEnabled)
         {
@@ -53,7 +55,7 @@ public class ControllerMenu : MonoBehaviour
     private void CheckControllers()
     {
         // If the player pressed A then tell the button to perform its action //
-        if (state.Buttons.A == ButtonState.Pressed)
+        if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
         {
             Options[Location].GetComponent<Button>().onClick.Invoke();
         }

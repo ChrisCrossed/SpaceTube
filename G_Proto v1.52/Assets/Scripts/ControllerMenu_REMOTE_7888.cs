@@ -32,12 +32,10 @@ public class ControllerMenu : MonoBehaviour
         state = GamePad.GetState(playerIndex);
         if (bEnabled)
         {
-            print("blop");
             if (Cooldown <= 0)
             {
                 if (state.IsConnected)
                 {
-                    //print(state.IsConnected);
                     // Get the state //
                     state = GamePad.GetState(playerIndex);
 
@@ -72,7 +70,6 @@ public class ControllerMenu : MonoBehaviour
         // Move Up in the menu //
         if (vertical >= 0.5)
         {
-            print("moving Up");
             Location -= 1;
             if (Location == -1)
             {

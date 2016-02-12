@@ -37,7 +37,11 @@ public class ControllerMenu : MonoBehaviour
             {
                 if (state.IsConnected)
                 {
+<<<<<<< HEAD
+                    
                     //print(state.IsConnected);
+=======
+>>>>>>> 6768d76d090de4b59a94e999156cd437628b9a1c
                     // Get the state //
                     state = GamePad.GetState(playerIndex);
 

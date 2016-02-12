@@ -98,7 +98,10 @@
     <Compile Include="Assets\Scripts\SoundClass.cs" />
     <Compile Include="Assets\Scripts\SpiralPlacer.cs" />
     <Compile Include="Assets\Scripts\SplashScreen.cs" />
+    <Compile Include="Assets\Scripts\TimeStorage.cs" />
+    <Compile Include="Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Scripts\WallDetection.cs" />
+    <Compile Include="Assets\Scripts\Window.cs" />
     <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
   </ItemGroup>
   <ItemGroup>

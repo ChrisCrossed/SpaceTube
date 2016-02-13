@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
+
 
 public class Avatar : MonoBehaviour
 {
@@ -19,6 +21,10 @@ public class Avatar : MonoBehaviour
     public HUD hud;
     public Transform car;
     public ScreenShake Shake;
+
+    public PlayerIndex playerIndex;
+    GamePadState state;
+    GamePadState prevState;
 
     private void Start()
     {
@@ -59,6 +65,9 @@ public class Avatar : MonoBehaviour
 	
 	private void Update ()
     {
+        prevState = state;
+        state = GamePad.GetState(playerIndex);
+
         hud.SetHP(currentHP);
         if (isDead)
         {
@@ -99,17 +108,19 @@ public class Avatar : MonoBehaviour
 
     IEnumerator ShipHit()
     {
+        GamePad.SetVibration(playerIndex, 0.5f, 0.5f);
         GetComponent<SoundClass>().PlayClassSound();
         car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, -60), 10 * Time.deltaTime);
         yield return new WaitForSeconds(0.25f);
         car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, 60), 10 * Time.deltaTime);
-
+        GamePad.SetVibration(playerIndex, 0, 0);
         // Tell the player they took a hit (Used for Achievements)
         player.GetComponent<Player>().HitObject();
     }
 
     IEnumerator ShipFlash()
     {
+        
         GetComponent<BoxCollider>().enabled = false;
         Booster.enabled = false;
         Body.enabled = false;

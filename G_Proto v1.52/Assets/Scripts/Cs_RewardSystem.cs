@@ -81,17 +81,17 @@ public class Cs_RewardSystem : MonoBehaviour
 
         if (PlayerPrefs.HasKey("Name_1st"))
         {
-            Name_1st = PlayerPrefs.GetString("Name_1st");
-            Name_2nd = PlayerPrefs.GetString("Name_2nd");
-            Name_3rd = PlayerPrefs.GetString("Name_3rd");
-            Name_4th = PlayerPrefs.GetString("Name_4th");
-            Name_5th = PlayerPrefs.GetString("Name_5th");
+            scoreboardInfo.Name_1st = PlayerPrefs.GetString("Name_1st");
+            scoreboardInfo.Name_2nd = PlayerPrefs.GetString("Name_2nd");
+            scoreboardInfo.Name_3rd = PlayerPrefs.GetString("Name_3rd");
+            scoreboardInfo.Name_4th = PlayerPrefs.GetString("Name_4th");
+            scoreboardInfo.Name_5th = PlayerPrefs.GetString("Name_5th");
 
-            Score_1st = (uint)PlayerPrefs.GetInt("Score_1st");
-            Score_2nd = (uint)PlayerPrefs.GetInt("Score_2nd");
-            Score_3rd = (uint)PlayerPrefs.GetInt("Score_3rd");
-            Score_4th = (uint)PlayerPrefs.GetInt("Score_4th");
-            Score_5th = (uint)PlayerPrefs.GetInt("Score_5th");
+            scoreboardInfo.Score_1st = (uint)PlayerPrefs.GetInt("Score_1st");
+            scoreboardInfo.Score_2nd = (uint)PlayerPrefs.GetInt("Score_2nd");
+            scoreboardInfo.Score_3rd = (uint)PlayerPrefs.GetInt("Score_3rd");
+            scoreboardInfo.Score_4th = (uint)PlayerPrefs.GetInt("Score_4th");
+            scoreboardInfo.Score_5th = (uint)PlayerPrefs.GetInt("Score_5th");
         }
         else
         {
@@ -107,8 +107,10 @@ public class Cs_RewardSystem : MonoBehaviour
             scoreboardInfo.Score_4th = Score_4th;
             scoreboardInfo.Score_5th = Score_5th;
 
-            SaveRewardsToFile();
         }
+
+        // print("Load Rewards");
+        SaveRewardsToFile();
     }
 
     /*******************************************************************************
@@ -125,7 +127,7 @@ public class Cs_RewardSystem : MonoBehaviour
         // PlayerPrefs.SetInt("HighScore",             (int)ui_HighScore);
         // PlayerPrefs.SetInt("HighScore_LongestLife", (int)ui_HighScore_LongestLife);
 
-        print("Saving values");
+        print("Saving values: " + scoreboardInfo.Name_1st);
 
         PlayerPrefs.SetString("Name_1st", scoreboardInfo.Name_1st);
         PlayerPrefs.SetString("Name_2nd", scoreboardInfo.Name_2nd);
@@ -142,21 +144,69 @@ public class Cs_RewardSystem : MonoBehaviour
 
     public ScoreboardInfo GetScoreboardInfo()
     {
-        scoreboardInfo = new ScoreboardInfo();
+        if(scoreboardInfo.Name_1st == null)
+        {
+            scoreboardInfo = new ScoreboardInfo();
 
-        scoreboardInfo.Name_1st = Name_1st;
-        scoreboardInfo.Name_2nd = Name_2nd;
-        scoreboardInfo.Name_3rd = Name_3rd;
-        scoreboardInfo.Name_4th = Name_4th;
-        scoreboardInfo.Name_5th = Name_5th;
+            scoreboardInfo.Name_1st = Name_1st;
+            scoreboardInfo.Name_2nd = Name_2nd;
+            scoreboardInfo.Name_3rd = Name_3rd;
+            scoreboardInfo.Name_4th = Name_4th;
+            scoreboardInfo.Name_5th = Name_5th;
 
-        scoreboardInfo.Score_1st = Score_1st;
-        scoreboardInfo.Score_2nd = Score_2nd;
-        scoreboardInfo.Score_3rd = Score_3rd;
-        scoreboardInfo.Score_4th = Score_4th;
-        scoreboardInfo.Score_5th = Score_5th;
+            scoreboardInfo.Score_1st = Score_1st;
+            scoreboardInfo.Score_2nd = Score_2nd;
+            scoreboardInfo.Score_3rd = Score_3rd;
+            scoreboardInfo.Score_4th = Score_4th;
+            scoreboardInfo.Score_5th = Score_5th;
+        }
 
         return scoreboardInfo;
+    }
+
+    /*******************************************************************************
+        Function: SetScoreInformation
+
+     Description: Sets the value of the player's score
+
+          Inputs: i_PlayerScore_ (int)            - Receives the int value to set
+
+         Outputs: None
+    *******************************************************************************/
+    public void SetScoreOnDeath(int i_PlayerScore_)
+    {
+        int currPos = 6;
+
+        // Run through the group of scoreboard scores.
+        // If the score received is higher than the current lowest score, decrease the counter
+        if (i_PlayerScore_ > scoreboardInfo.Score_5th) --currPos; else return;
+        if (i_PlayerScore_ > scoreboardInfo.Score_4th) --currPos;
+        if (i_PlayerScore_ > scoreboardInfo.Score_3rd) --currPos;
+        if (i_PlayerScore_ > scoreboardInfo.Score_2nd) --currPos;
+        if (i_PlayerScore_ > scoreboardInfo.Score_1st) --currPos;
+        
+        // Move the current score to the position below it
+        for(int i = 5; i >= currPos; --i)
+        {
+            if(i == currPos)
+            {
+                if (i == 1) scoreboardInfo.Score_1st = (uint)i_PlayerScore_;
+                if (i == 2) scoreboardInfo.Score_2nd = (uint)i_PlayerScore_;
+                if (i == 3) scoreboardInfo.Score_3rd = (uint)i_PlayerScore_;
+                if (i == 4) scoreboardInfo.Score_4th = (uint)i_PlayerScore_;
+                if (i == 5) scoreboardInfo.Score_5th = (uint)i_PlayerScore_;
+            }
+            else
+            {
+                if (i == 2) scoreboardInfo.Score_2nd = scoreboardInfo.Score_1st;
+                if (i == 3) scoreboardInfo.Score_3rd = scoreboardInfo.Score_2nd;
+                if (i == 4) scoreboardInfo.Score_4th = scoreboardInfo.Score_3rd;
+                if (i == 5) scoreboardInfo.Score_5th = scoreboardInfo.Score_4th;
+            }
+        }
+
+        // Save the scores to the scoreboard
+        SaveRewardsToFile();
     }
 
     #region SetRewardInformation Overloads
@@ -291,6 +341,8 @@ public class Cs_RewardSystem : MonoBehaviour
         scoreboardInfo.Score_3rd = 800;
         scoreboardInfo.Score_4th = 700;
         scoreboardInfo.Score_5th = 600;
+
+        print(scoreboardInfo.Name_1st);
 
         SaveRewardsToFile();
     }

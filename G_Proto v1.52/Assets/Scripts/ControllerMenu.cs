@@ -32,7 +32,6 @@ public class ControllerMenu : MonoBehaviour
         state = GamePad.GetState(playerIndex);
         if (bEnabled)
         {
-            print("blop");
             if (Cooldown <= 0)
             {
                 if (state.IsConnected)

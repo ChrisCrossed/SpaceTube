@@ -8,21 +8,30 @@ public class PipeSystem : MonoBehaviour {
 
 	public int emptyPipeCount;
 
-	private Pipe[] pipes;
+	public Pipe[] pipes;
 
     public float StartTime = 7;
     public float Timer;
 
+    private bool FirstGame = true;
+
     private void Awake ()
     {
-		pipes = new Pipe[pipeCount];
-		for (int i = 0; i < pipes.Length; i++)
-        {
-			Pipe pipe = pipes[i] = Instantiate<Pipe>(pipePrefab);
-			pipe.transform.SetParent(transform, false);
-            Application.targetFrameRate = 300;
-		}
+        
+		
 	}
+
+    public void StartGame()
+    {
+        pipes = new Pipe[pipeCount];
+        for (int i = 0; i < pipes.Length; i++)
+        {
+            Pipe pipe = pipes[i] = Instantiate<Pipe>(pipePrefab);
+            pipe.transform.SetParent(transform, false);
+            Application.targetFrameRate = 300;
+        }
+        FirstGame = false;
+    }
 
 	public Pipe SetupFirstPipe ()
     {
@@ -80,4 +89,18 @@ public class PipeSystem : MonoBehaviour {
 			}
 		}
 	}
+
+    public void KillAllPipes()
+    {
+
+            foreach (Pipe OldPipe in pipes)
+            {
+                //print("blow it up");
+                Destroy(OldPipe.gameObject);
+                //print(OldPipe);
+
+            }
+
+        
+    }
 }

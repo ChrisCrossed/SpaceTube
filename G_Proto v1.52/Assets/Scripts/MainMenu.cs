@@ -37,6 +37,8 @@ public class MainMenu : MonoBehaviour
         BGMPlayer.GetComponent<SoundClass>().Stop();
         PauseMenu.GetComponent<PauseIt>().bInGame = false;
         scoreLabel.text = ((int)(distanceTraveled * 10f)).ToString();
+        player.Die();
+
         //StartCoroutine(End(distanceTraveled));
 
     }
@@ -45,8 +47,17 @@ public class MainMenu : MonoBehaviour
     {
 
         SelectedTrack = INasSelectedTrack;
+        
 
     }
+
+    public void SelectPipe(Pipe INpSelectedPipe)
+    {
+        //Pipe timmy = INpSelectedPipe.GetComponent<Pipe>();
+        //player.pipeSystem.pipePrefab = timmy;
+        player.pipeSystem.pipePrefab = INpSelectedPipe;
+    }
+
 
     public void DeadWait()
     {
@@ -81,6 +92,7 @@ public class MainMenu : MonoBehaviour
        
         //gameObject.SetActive(true);
         gameObject.GetComponent<Canvas>().enabled = true;
+        
     }
 
 }

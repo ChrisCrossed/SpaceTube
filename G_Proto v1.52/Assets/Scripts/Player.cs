@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
         rotationInput = 0f;
 		acceleration = accelerations[accelerationMode];
 		velocity = startVelocity;
+        pipeSystem.StartGame();
 		currentPipe = pipeSystem.SetupFirstPipe();
 		SetupCurrentPipe();
 		gameObject.SetActive(true);
@@ -205,7 +206,9 @@ public class Player : MonoBehaviour
         GetComponent<SoundClass>().PlayInportedSound(DeadNoise, false);
         yield return new WaitForSeconds(1f);
         mainMenu.EndGame(distanceTraveled);
-        
+
+        pipeSystem.KillAllPipes();
+
         gameObject.SetActive(false);
     }
 

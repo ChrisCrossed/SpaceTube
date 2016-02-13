@@ -10,7 +10,9 @@ public class Pipe : MonoBehaviour {
 	public float minCurveRadius, maxCurveRadius;
 	public int minCurveSegmentCount, maxCurveSegmentCount;
 
+    public int iEndItemSpawnCounter;
     public GameObject[] generators;
+    public GameObject[] goEndItemGenerators;
     //public Transform[]  timmy;
     //public GameObject[] trimmy;
 
@@ -24,6 +26,7 @@ public class Pipe : MonoBehaviour {
 
 	private float curveAngle;
 	private float relativeRotation;
+    private int iEndItemTimer;
 
     
 
@@ -70,7 +73,22 @@ public class Pipe : MonoBehaviour {
 			Destroy(transform.GetChild(i).gameObject);
 		}
 		if (withItems) {
-			generators[Random.Range(0, generators.Length)].GetComponent<PipeItemGenerator>().GenerateItems(this);
+            if(iEndItemTimer == iEndItemSpawnCounter)
+            {
+
+                goEndItemGenerators[Random.Range(0, goEndItemGenerators.Length)].GetComponent<PipeItemGenerator>().GenerateItems(this);
+                iEndItemTimer = 0;
+                print("Time for End");
+
+            }
+            else
+            {
+                //bPlaceEndItem = true;
+                generators[Random.Range(0, generators.Length)].GetComponent<PipeItemGenerator>().GenerateItems(this);
+                iEndItemTimer += 1;
+                print("Time for Norm " + iEndItemTimer);
+            }
+			
 		}
 	}
 

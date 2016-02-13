@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
 
 public class Player : MonoBehaviour
 {
@@ -41,7 +42,11 @@ public class Player : MonoBehaviour
 
     public AudioClip DeadNoise;
 
-	public void StartGame (int accelerationMode)
+    public PlayerIndex playerIndex;
+    GamePadState state;
+    GamePadState prevState;
+
+    public void StartGame (int accelerationMode)
     {
 		distanceTraveled = 0f;
 		avatarRotation = 0f;
@@ -86,7 +91,10 @@ public class Player : MonoBehaviour
 
 	private void Update ()
     {
-		velocity += acceleration * Time.deltaTime;
+        prevState = state;
+        state = GamePad.GetState(playerIndex);
+
+        velocity += acceleration * Time.deltaTime;
 		float delta = velocity * Time.deltaTime;
 
         // Store the current distance travelled.

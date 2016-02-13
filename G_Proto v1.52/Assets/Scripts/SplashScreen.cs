@@ -17,8 +17,7 @@ public class SplashScreen : MonoBehaviour
 
     public GameObject scAudio;
     public GameObject Camera;
-
-    public ControllerMenu cmMainMenu;
+    public GameObject MainMenu;
 
     // Use this for initialization
     private void Start()
@@ -85,7 +84,7 @@ public class SplashScreen : MonoBehaviour
             //scAudio.GetComponent<SoundClass>().SetResumeLocation(scAudio.GetComponent<AudioSource>().timeSamples);
             //Application.LoadLevel(sLevelToLoad);
             Camera.GetComponent<Canvas>().enabled = false;
-            cmMainMenu.bEnabled = true;
+            MainMenu.SetActive(true);
         }
     }
 
@@ -94,7 +93,7 @@ public class SplashScreen : MonoBehaviour
         bFading = true;
         yield return new WaitForSeconds(6);
         Application.LoadLevel(sLevelToLoad);
-        cmMainMenu.bEnabled = true;
+        MainMenu.SetActive(true);
         yield break;
     }
 }

@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 #endif
 
 namespace UnityStandardAssets.Utility
@@ -79,7 +81,10 @@ namespace UnityStandardAssets.Utility
         private IEnumerator ReloadLevel(Entry entry)
         {
             yield return new WaitForSeconds(entry.delay);
-            Application.LoadLevel(Application.loadedLevel);
+            
+            // Note from Chris - Attempting to fix the warning. Talk to me if/when this breaks.
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // Application.LoadLevel(Application.loadedLevel);
         }
     }
 }

@@ -67,7 +67,8 @@ public class Player : MonoBehaviour
         StartCoroutine(End(distanceTraveled));
 
         // Pass along this live's score to the RewardSystem
-        gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.HighScore, (int)(distanceTraveled * 10));
+        // gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.HighScore, (int)(distanceTraveled * 10));
+        gameObject.GetComponent<Cs_RewardSystem>().SetScoreOnDeath((int)(distanceTraveled * 10));
     }
 
 	private void Awake () {
@@ -81,7 +82,7 @@ public class Player : MonoBehaviour
     public void HitObject()
     {
         // Pass to the RewardSystem that they took a hit
-        gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.LongestLife, (int)(distanceTraveled_OneLife * 10));
+        // gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.LongestLife, (int)(distanceTraveled_OneLife * 10));
         distanceTraveled_OneLife = 0f;
     }
 
@@ -89,6 +90,13 @@ public class Player : MonoBehaviour
     {
 		velocity += acceleration * Time.deltaTime;
 		float delta = velocity * Time.deltaTime;
+
+        // CHEAT CODE: Give player 100 points instantly
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            distanceTraveled += 10;
+            print("Cheater!!!");
+        }
 
         // Store the current distance travelled.
         distanceTraveled += delta;
@@ -123,8 +131,6 @@ public class Player : MonoBehaviour
 		UpdateAvatarRotation();
 
 		hud.SetValues(distanceTraveled, velocity);
-
-        //print(Mathf.FloorToInt(distanceTraveled));
 
         if(Mathf.FloorToInt(distanceTraveled) % 50 == 1)
         {

@@ -47,8 +47,9 @@ public class ControllerMenu : MonoBehaviour
 
             else
             {
-                Cooldown -= Time.deltaTime;
+                Cooldown -= 0.1f;
             }
+            CheckControllers();
 
         }
     }
@@ -71,7 +72,6 @@ public class ControllerMenu : MonoBehaviour
         // Move Up in the menu //
         if (vertical >= 0.5)
         {
-            print("moving Up");
             Location -= 1;
             if (Location == -1)
             {
@@ -122,7 +122,6 @@ public void ToggleOn()
         {
             bEnabled = true;
         }
-        //print(bEnabled);
     }
 
 }

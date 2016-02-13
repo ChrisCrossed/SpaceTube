@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
 
     public AudioClip SelectedTrack;
 
-    public GameObject PauseMenu;
+    public PauseIt PauseMenu;
 
     public AudioClip StartNoise;
     public AudioClip EndNoise;
@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
     {
         gameObject.SetActive(true);
         BGMPlayer.GetComponent<SoundClass>().Stop();
-        PauseMenu.GetComponent<PauseIt>().bInGame = false;
+        PauseMenu.bInGame = false;
         scoreLabel.text = ((int)(distanceTraveled * 10f)).ToString();
         player.Die();
 
@@ -63,7 +63,7 @@ public class MainMenu : MonoBehaviour
     {
 
         BGMPlayer.GetComponent<SoundClass>().Stop();
-        PauseMenu.GetComponent<PauseIt>().bInGame = false;
+        PauseMenu.bInGame = false;
         
     }
 
@@ -77,7 +77,7 @@ public class MainMenu : MonoBehaviour
         player.GetComponent<SoundClass>().PlayInportedSound(StartNoise, false);
         gameObject.SetActive(false);
         BGMPlayer.GetComponent<SoundClass>().PlayInportedSound(SelectedTrack, true);
-        PauseMenu.GetComponent<PauseIt>().bInGame = true;
+        PauseMenu.bInGame = true;
         
     }
 

@@ -51,16 +51,16 @@ public class PauseIt : MonoBehaviour {
             cPauseMenu.enabled = false;
             cHowToPlay.enabled = false;
             bInHowtoPlay = false;
-            cmMenu.enabled = false;
-            cmMenu.ToggleOn();
+           // cmMenu.enabled = false;
+            //cmMenu.ToggleOn();
         }
         else
         {
             Time.timeScale = 0;
             bIsPaused = true;
             cPauseMenu.enabled = true;
-            cmMenu.enabled = true;
-            cmMenu.ToggleOn();
+            //cmMenu.enabled = true;
+            //cmMenu.ToggleOn();
         }
     }
     public void MenuReturn()

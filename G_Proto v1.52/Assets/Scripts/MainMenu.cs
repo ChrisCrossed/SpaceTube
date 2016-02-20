@@ -18,10 +18,16 @@ public class MainMenu : MonoBehaviour
     public AudioClip StartNoise;
     public AudioClip EndNoise;
 
-	private void Awake () {
-		Application.targetFrameRate = 1000;
+    public ChangeStartingButton ButtonChanger;
+    public GameObject ButtonTarget;
 
-        
+	private void Awake ()
+    {
+		Application.targetFrameRate = 1000;    
+    }
+    void OnEnable()
+    {
+
     }
 
 	public void StartGame (int mode)

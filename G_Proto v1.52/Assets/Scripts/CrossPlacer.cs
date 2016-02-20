@@ -16,9 +16,9 @@ public class CrossPlacer : PipeItemGenerator
         float direction = 0.30f;
 
         float angleStep = 2.4f;
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 1; i++)
         {
-            if(i<2)
+            if(i>1)
             {
 
                 PipeItem item = Instantiate<PipeItem>(

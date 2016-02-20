@@ -7,6 +7,7 @@ public class SplashScreen : MonoBehaviour
     public Image iSplashScreen;
     public string sLevelToLoad;
     private bool bFading = false;
+    private bool bMenuOn = false;
     private float fScale;
 
     public Image iNewImage1;
@@ -18,11 +19,13 @@ public class SplashScreen : MonoBehaviour
     public GameObject scAudio;
     public GameObject Camera;
     public GameObject MainMenu;
+    public Canvas cMainMenu;
+    public ChangeStartingButton ChangeButton;
+    public GameObject ButtonTarget;
 
-    // Use this for initialization
-    private void Start()
+    private void OnEnable()
     {
-
+        bMenuOn = false;
     }
 
     private void Update()
@@ -71,7 +74,14 @@ public class SplashScreen : MonoBehaviour
 
             else if (iNewImage2.color == Color.clear && ImageSpot == 2)
             {
-                Camera.GetComponent<Canvas>().enabled = false;
+                if(!bMenuOn)
+                {
+                    Camera.GetComponent<Canvas>().enabled = false;
+                    cMainMenu.enabled = true;
+                    MainMenu.SetActive(true);
+                    ChangeButton.ChangeButton(ButtonTarget);
+                    bMenuOn = true;
+                }
             }
         }
         else
@@ -82,18 +92,26 @@ public class SplashScreen : MonoBehaviour
         if (Input.anyKeyDown)
         {
             //scAudio.GetComponent<SoundClass>().SetResumeLocation(scAudio.GetComponent<AudioSource>().timeSamples);
-            //Application.LoadLevel(sLevelToLoad);
-            Camera.GetComponent<Canvas>().enabled = false;
-            MainMenu.SetActive(true);
+            if (!bMenuOn)
+            {
+                Camera.GetComponent<Canvas>().enabled = false;
+                cMainMenu.enabled = true;
+                MainMenu.SetActive(true);
+                ChangeButton.ChangeButton(ButtonTarget);
+                bMenuOn = true;
+            }
         }
     }
 
+    //Wtf does this do??
     IEnumerator MenuCall()
     {
         bFading = true;
         yield return new WaitForSeconds(6);
         Application.LoadLevel(sLevelToLoad);
+        cMainMenu.enabled = true;
         MainMenu.SetActive(true);
+        ChangeButton.ChangeButton(ButtonTarget);
         yield break;
     }
 }

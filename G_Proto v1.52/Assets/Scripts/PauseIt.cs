@@ -7,13 +7,20 @@ public class PauseIt : MonoBehaviour {
     public bool bInGame;
 
     public Canvas cPauseMenu;
+    public GameObject gPauseMenu;
+    public ChangeStartingButton changeButton;
+    public GameObject buttonTarget;
+
     public MainMenu mmMainMenu;
     public Player pPlayer;
+
+    public GameObject gHowToPlay;
     public Canvas cHowToPlay;
-    public ControllerMenu cmMenu;
+
+    public GameObject gConfirm;
+    public Canvas cConfirm;
 
     public bool bInHowtoPlay;
-
     private bool bIsPaused;
 
     public PlayerIndex playerIndex;
@@ -42,27 +49,26 @@ public class PauseIt : MonoBehaviour {
             Pause();
         }
     }
+
     private void Pause()
     {
         if (bIsPaused == true)
         {
             Time.timeScale = 1;
             bIsPaused = false;
+            gPauseMenu.SetActive(false);
             cPauseMenu.enabled = false;
-            cHowToPlay.enabled = false;
-            bInHowtoPlay = false;
-           // cmMenu.enabled = false;
-            //cmMenu.ToggleOn();
         }
         else
         {
             Time.timeScale = 0;
             bIsPaused = true;
+            gPauseMenu.SetActive(true);
             cPauseMenu.enabled = true;
-            //cmMenu.enabled = true;
-            //cmMenu.ToggleOn();
+            changeButton.ChangeButton(buttonTarget);
         }
     }
+
     public void MenuReturn()
     {
         mmMainMenu.EndGame(pPlayer.distanceTraveled);
@@ -71,29 +77,14 @@ public class PauseIt : MonoBehaviour {
         cPauseMenu.enabled = false;
     }
 
-    public void HowToPlay()
-    {
-
-        if (bInHowtoPlay == true)
-        {
-            cHowToPlay.enabled = false;
-            cPauseMenu.enabled = true;
-            bInHowtoPlay = false;
-        }
-        else
-        {
-            cHowToPlay.enabled = true;
-            cPauseMenu.enabled = false;
-            bInHowtoPlay = true;
-        }
-
-    }
 
     public void Resume()
     {
         Time.timeScale = 1;
         bIsPaused = false;
+        gPauseMenu.SetActive(false);
         cPauseMenu.enabled = false;
+        cHowToPlay.enabled = false;
     }
 
 

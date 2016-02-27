@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     private bool CheckPointHit;
     private float CheckPointTimer;
 
+    public ParticleSystem pboostRing;
+    private int iParticleAmount = 10;
+
     private bool bDead;
     private float fDeadTimer;
     
@@ -146,6 +149,7 @@ public class Player : MonoBehaviour
             {
                 CheckPointHit = true;
                 hud.CheckPoint();
+                BoostRing();
             }                      
         }             
 	}
@@ -210,6 +214,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void BoostRing()
+    {
+        if (iParticleAmount >= pboostRing.maxParticles)
+        {
+            pboostRing.Emit(pboostRing.maxParticles);
+            StartCoroutine(TimedVibration());
+        }
+        else
+        {
+            StartCoroutine(TimedVibration());
+            pboostRing.Emit(iParticleAmount);
+            iParticleAmount += 10;
+        }
+
+    }
+
     IEnumerator End(float distanceTraveled)
     {
         mrBooster.enabled = false;
@@ -224,6 +244,13 @@ public class Player : MonoBehaviour
         pipeSystem.KillAllPipes();
 
         gameObject.SetActive(false);
+    }
+
+    IEnumerator TimedVibration()
+    {
+        GamePad.SetVibration(playerIndex, 1f, 1f);
+        yield return new WaitForSeconds(0.25f);
+        GamePad.SetVibration(playerIndex, 0f, 0f);
     }
 
 }

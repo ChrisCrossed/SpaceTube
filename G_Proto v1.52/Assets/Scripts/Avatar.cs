@@ -108,14 +108,32 @@ public class Avatar : MonoBehaviour
 
     IEnumerator ShipHit()
     {
-        GamePad.SetVibration(playerIndex, 0.5f, 0.5f);
-        GetComponent<SoundClass>().PlayClassSound();
-        car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, -60), 10 * Time.deltaTime);
-        yield return new WaitForSeconds(0.25f);
-        car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, 60), 10 * Time.deltaTime);
-        GamePad.SetVibration(playerIndex, 0, 0);
-        // Tell the player they took a hit (Used for Achievements)
-        player.GetComponent<Player>().HitObject();
+        if(currentHP >= 1)
+        {
+            print("hurt");
+            GamePad.SetVibration(playerIndex, 0.3f, 0.3f);
+            GetComponent<SoundClass>().PlayClassSound();
+            car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, -60), 10 * Time.deltaTime);
+            yield return new WaitForSeconds(0.25f);
+            car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, 60), 10 * Time.deltaTime);
+            GamePad.SetVibration(playerIndex, 0, 0);
+            // Tell the player they took a hit (Used for Achievements)
+            player.GetComponent<Player>().HitObject();
+        }
+
+        else
+        {
+            print("hurt bad");
+            GamePad.SetVibration(playerIndex, 1f, 1f);
+            GetComponent<SoundClass>().PlayClassSound();
+            car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, -90), 10 * Time.deltaTime);
+            yield return new WaitForSeconds(0.25f);
+            car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, 90), 10 * Time.deltaTime);
+            GamePad.SetVibration(playerIndex, 0, 0);
+            // Tell the player they took a hit (Used for Achievements)
+            player.GetComponent<Player>().HitObject();
+        }
+
     }
 
     IEnumerator ShipFlash()
@@ -124,13 +142,13 @@ public class Avatar : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
         Booster.enabled = false;
         Body.enabled = false;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
         Booster.enabled = true;
         Body.enabled = true;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
         Booster.enabled = false;
         Body.enabled = false;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
 
         if(!isDead)
         {

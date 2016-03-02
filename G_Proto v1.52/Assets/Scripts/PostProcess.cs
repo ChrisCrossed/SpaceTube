@@ -6,11 +6,18 @@ public class PostProcess : MonoBehaviour
 
   public float intensity;
   private Material mat;
+  private bool blending;
 
   // Use this for initialization
   void Awake()
   {
     mat = new Material(Shader.Find("Hidden/CamBW"));
+    blending = false;
+  }
+
+  public void StartBlend()
+  {
+    blending = true;
   }
 
   // Update is called once per frame
@@ -20,6 +27,15 @@ public class PostProcess : MonoBehaviour
     {
       Graphics.Blit(source, destination);
       return;
+    }
+
+    if(blending)
+    {
+      intensity += Time.deltaTime;
+      if(intensity > 1.0f)
+      {
+        intensity = 1.0f;
+      }
     }
 
     mat.SetFloat("_bwBlend", intensity);

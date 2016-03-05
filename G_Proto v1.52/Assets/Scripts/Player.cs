@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     private bool CheckPointHit;
     private float CheckPointTimer;
 
-    public ParticleSystem pboostRing;
+    public ParticleSystem pboostRing, pFastTrail;
     private int iParticleAmount = 10;
 
     private bool bDead;
@@ -66,7 +66,8 @@ public class Player : MonoBehaviour
         mrBooster.enabled = true;
         mrCarRender.enabled = true;
         mrCollider.enabled = true;
-	}
+        iParticleAmount = 10;
+    }
 
 	public void Die ()
     {
@@ -177,9 +178,17 @@ public class Player : MonoBehaviour
         {
 			avatarRotation -= 360f;
 		}
+
         if (Input.GetButton("Jump"))
         {
+            ParticleSystem.EmissionModule emTrail = pFastTrail.emission;
+            emTrail.enabled = true;
             avatarRotation += rotationVelocity * Time.deltaTime * rotationInput;
+        }
+        else
+        {
+            ParticleSystem.EmissionModule emTrail = pFastTrail.emission;
+            emTrail.enabled = false;
         }
 
         rotater.localRotation = Quaternion.Euler(avatarRotation, 0f, 0f);
@@ -227,6 +236,7 @@ public class Player : MonoBehaviour
             pboostRing.Emit(iParticleAmount);
             iParticleAmount += 10;
         }
+        print(iParticleAmount);
 
     }
 

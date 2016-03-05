@@ -110,7 +110,6 @@ public class Avatar : MonoBehaviour
     {
         if(currentHP >= 1)
         {
-            print("hurt");
             GamePad.SetVibration(playerIndex, 0.3f, 0.3f);
             GetComponent<SoundClass>().PlayClassSound();
             car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, -60), 10 * Time.deltaTime);
@@ -123,7 +122,6 @@ public class Avatar : MonoBehaviour
 
         else
         {
-            print("hurt bad");
             GamePad.SetVibration(playerIndex, 1f, 1f);
             GetComponent<SoundClass>().PlayClassSound();
             car.transform.localRotation = Quaternion.Lerp(car.transform.localRotation, Quaternion.Euler(0, 270, -90), 10 * Time.deltaTime);

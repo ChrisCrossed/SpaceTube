@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-public class PipeSystem : MonoBehaviour {
+public class PipeSystem : MonoBehaviour
+{
+    public Avatar aAvatar;
 
 	public Pipe pipePrefab;
 
@@ -53,7 +55,16 @@ public class PipeSystem : MonoBehaviour {
     {
 		ShiftPipes();
 		AlignNextPipeWithOrigin();
-		pipes[pipes.Length - 1].Generate();
+
+        if(aAvatar.currentHP <= 0)
+        {
+            pipes[pipes.Length - 1].Generate(false);
+        }
+        else
+        {
+            pipes[pipes.Length - 1].Generate();
+        }
+        	
 		pipes[pipes.Length - 1].AlignWith(pipes[pipes.Length - 2]);
 		transform.localPosition = new Vector3(0f, -pipes[1].CurveRadius);
 		return pipes[1];

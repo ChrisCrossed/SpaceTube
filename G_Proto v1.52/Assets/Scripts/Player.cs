@@ -4,6 +4,7 @@ using XInputDotNetPure;
 
 public class Player : MonoBehaviour
 {
+    public bool bDead = false;
     public bool bAutoPlay = false;
 
 	public PipeSystem pipeSystem;
@@ -32,7 +33,6 @@ public class Player : MonoBehaviour
     public ParticleSystem pboostRing, pFastTrail;
     private int iParticleAmount = 10;
 
-    private bool bDead;
     private float fDeadTimer;
     
 
@@ -71,10 +71,11 @@ public class Player : MonoBehaviour
 
 	public void Die ()
     {
-        //bDead = true;
-        //Time.timeScale = 0;
-        StartCoroutine(End(distanceTraveled));
-
+        mrBooster.enabled = false;
+        mrCarRender.enabled = false;
+        mrCollider.enabled = false;
+        mainMenu.BGMPlayer.GetComponent<SoundClass>().Stop();
+        GetComponent<SoundClass>().PlayInportedSound(DeadNoise, true);
         // Pass along this live's score to the RewardSystem
         // gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.HighScore, (int)(distanceTraveled * 10));
         gameObject.GetComponent<Cs_RewardSystem>().SetScoreOnDeath((int)(distanceTraveled * 10));
@@ -111,8 +112,11 @@ public class Player : MonoBehaviour
         }
 
         // Store the current distance travelled.
-        distanceTraveled += delta;
-        distanceTraveled_OneLife += delta;
+        if(!bDead)
+        {
+            distanceTraveled += delta;
+            distanceTraveled_OneLife += delta;
+        }
 
 		systemRotation += delta * deltaToRotation;
 
@@ -236,24 +240,13 @@ public class Player : MonoBehaviour
             pboostRing.Emit(iParticleAmount);
             iParticleAmount += 10;
         }
-        print(iParticleAmount);
-
     }
-
-    IEnumerator End(float distanceTraveled)
+    public void Reset()
     {
-        mrBooster.enabled = false;
-        mrCarRender.enabled = false;
-        mrCollider.enabled = false;
-
-        mainMenu.BGMPlayer.GetComponent<SoundClass>().Stop();
-        GetComponent<SoundClass>().PlayInportedSound(DeadNoise, false);
-        yield return new WaitForSeconds(1f);
-        mainMenu.EndGame(distanceTraveled);
-
         pipeSystem.KillAllPipes();
-
         gameObject.SetActive(false);
+        bDead = false;
+        mainMenu.EndGame(distanceTraveled);
     }
 
     IEnumerator TimedVibration()

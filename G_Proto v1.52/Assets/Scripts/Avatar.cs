@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using XInputDotNetPure;
 
 
 public class Avatar : MonoBehaviour
 {
-
+    public GameObject DeadScreen;
+    public Text ScoreLabel;
 	public ParticleSystem trail, burst;
 
     public Renderer Body, Booster;
@@ -72,17 +74,16 @@ public class Avatar : MonoBehaviour
         if (isDead)
         {
 			deathCountdown -= Time.deltaTime;
-			if (deathCountdown <= 0f)
+            if (deathCountdown <= 0f && player.bDead == false)
             {
 				deathCountdown = -1f;
-
                 ParticleSystem.EmissionModule emTrail = trail.emission;
                 emTrail.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
-                currentHP = HP;
-                isDead = false;
-                fHits = 0;
-                hud.HudReset();
+                player.bDead = true;
+                DeadScreen.SetActive(true);
+                DeadScreen.GetComponent<Canvas>().enabled = true;
+                ScoreLabel.text = ((int)(player.distanceTraveled * 10f)).ToString();
                 player.Die();
             }
 		}
@@ -104,6 +105,14 @@ public class Avatar : MonoBehaviour
                 Jim.enabled = false;
             }
         }
+    }
+
+    public void Reset()
+    {
+        currentHP = HP;
+        isDead = false;
+        fHits = 0;
+        hud.HudReset();
     }
 
     IEnumerator ShipHit()

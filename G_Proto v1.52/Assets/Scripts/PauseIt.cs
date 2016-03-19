@@ -4,7 +4,7 @@ using XInputDotNetPure;
 
 public class PauseIt : MonoBehaviour {
 
-    public bool bInGame;
+    public bool bInGame = false;
 
     public Canvas cPauseMenu;
     public GameObject gPauseMenu;
@@ -30,7 +30,7 @@ public class PauseIt : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        bInGame = false;
+        //bInGame = false;
 	}
 	
 	// Update is called once per frame

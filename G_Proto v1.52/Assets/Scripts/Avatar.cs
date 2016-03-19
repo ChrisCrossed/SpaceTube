@@ -13,7 +13,7 @@ public class Avatar : MonoBehaviour
     public Renderer Body, Booster;
 	public Player player;
 
-	public float deathCountdown = -1f;
+	public float deathCountdown = 1f;
     public float HP;
 
     public float currentHP;
@@ -41,6 +41,7 @@ public class Avatar : MonoBehaviour
         ParticleSystem.EmissionModule emTrail = trail.emission;
         emTrail.enabled = true;
         GetComponent<BoxCollider>().enabled = true;
+        deathCountdown = 1;
     }
 
     private void OnTriggerEnter (Collider collider)
@@ -59,7 +60,7 @@ public class Avatar : MonoBehaviour
             emTrail.enabled = false;
             GetComponent<BoxCollider>().enabled = false;
             burst.Emit(burst.maxParticles);
-            deathCountdown = burst.startLifetime;
+            //deathCountdown = burst.startLifetime;
             isDead = true;
         }
 
@@ -76,7 +77,7 @@ public class Avatar : MonoBehaviour
 			deathCountdown -= Time.deltaTime;
             if (deathCountdown <= 0f && player.bDead == false)
             {
-				deathCountdown = -1f;
+				deathCountdown = 1f;
                 ParticleSystem.EmissionModule emTrail = trail.emission;
                 emTrail.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
@@ -84,7 +85,7 @@ public class Avatar : MonoBehaviour
                 DeadScreen.SetActive(true);
                 DeadScreen.GetComponent<Canvas>().enabled = true;
                 ScoreLabel.text = ((int)(player.distanceTraveled * 10f)).ToString();
-                player.Die();
+                player.Die();          
             }
 		}
 

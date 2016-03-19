@@ -51,7 +51,8 @@ public class Player : MonoBehaviour
 
     public void StartGame (int accelerationMode)
     {
-		distanceTraveled = 0f;
+        print("start game");
+        distanceTraveled = 0f;
 		avatarRotation = 0f;
 		systemRotation = 0f;
 		worldRotation = 0f;

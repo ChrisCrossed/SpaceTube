@@ -41,7 +41,7 @@ public class PauseIt : MonoBehaviour {
 
         if (Input.GetKeyUp(KeyCode.Escape) && bInGame)
         {
-            print("why is this toomuch to ask for?");
+            //print("why is this toomuch to ask for?");
             Pause();
         }
 

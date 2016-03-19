@@ -47,13 +47,9 @@ public class SoundClass : MonoBehaviour {
 
         if(INbRepeat == true)
         {
-
             bRepeat = true;
             acSound = INacAudioToPlay;
-
         }
-
-
     }
 
     public void PlayClassSound()

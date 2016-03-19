@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     public MeshRenderer mrBooster;
     public BoxCollider mrCollider;
 
-    public AudioClip DeadNoise;
+    //public AudioClip DeadNoise;
 
     public PlayerIndex playerIndex;
     GamePadState state;
@@ -76,7 +76,6 @@ public class Player : MonoBehaviour
         mrCarRender.enabled = false;
         mrCollider.enabled = false;
         mainMenu.BGMPlayer.GetComponent<SoundClass>().Stop();
-        GetComponent<SoundClass>().PlayInportedSound(DeadNoise, true);
         // Pass along this live's score to the RewardSystem
         // gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.HighScore, (int)(distanceTraveled * 10));
         gameObject.GetComponent<Cs_RewardSystem>().SetScoreOnDeath((int)(distanceTraveled * 10));

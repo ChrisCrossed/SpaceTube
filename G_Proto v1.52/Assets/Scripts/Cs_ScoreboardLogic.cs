@@ -106,7 +106,6 @@ public class Cs_ScoreboardLogic : MonoBehaviour
                 // 
                 char[] test = NameList[currWord_].ToCharArray(i, 1);
                 NameGroup[currWord_].GetComponent<Text>().text += test[0];
-                print(NameGroup[currWord_].GetComponent<Text>().text);
             }
 
             ++NameLength_Curr[currWord_];
@@ -137,14 +136,23 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         if (i_ScoreCounter < 4) f_Timer += Time.deltaTime;
         f_LetterTimer += Time.deltaTime;
 
+        print("Length: " + NameLength_Curr[0]);
+        print("Timer: " + f_LetterTimer);
+
         if (f_Timer >= 0.5f + i_NameCounter) ++i_NameCounter;
-        if (f_Timer >= 1.0f + i_ScoreCounter) ++i_ScoreCounter;
+        if (f_Timer >= 1f + i_ScoreCounter) ++i_ScoreCounter;
 
-        if (f_LetterTimer >= 0.1f) { IncrementLetterVisibility(i_NameCounter, i_ScoreCounter); f_LetterTimer = 0f; }
-        
-        for(int i = 0; i < i_NameCounter; ++i)
+        if (f_LetterTimer >= 0.25f)
         {
+            for(int j = 0; j < i_ScoreCounter + 1; ++j)
+            {
+                for(int i = 0; i < i_NameCounter + 1; ++i)
+                {
+                    IncrementLetterVisibility(i, j);
+                }
+            }
 
+            f_LetterTimer = 0.0f;
         }
 
         if (i_NameCounter >= 0) NameGroup[i_NameCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);

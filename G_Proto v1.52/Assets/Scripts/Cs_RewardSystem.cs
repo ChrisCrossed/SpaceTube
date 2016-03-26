@@ -129,8 +129,6 @@ public class Cs_RewardSystem : MonoBehaviour
         // PlayerPrefs.SetInt("HighScore",             (int)ui_HighScore);
         // PlayerPrefs.SetInt("HighScore_LongestLife", (int)ui_HighScore_LongestLife);
 
-        print("Saving values: " + scoreboardInfo.Name_1st);
-
         PlayerPrefs.SetString("Name_1st", scoreboardInfo.Name_1st);
         PlayerPrefs.SetString("Name_2nd", scoreboardInfo.Name_2nd);
         PlayerPrefs.SetString("Name_3rd", scoreboardInfo.Name_3rd);

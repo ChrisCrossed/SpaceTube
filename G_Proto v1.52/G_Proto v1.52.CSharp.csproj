@@ -18,6 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.2f1</UnityVersion>
     <RootNamespace></RootNamespace>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -77,6 +78,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AislePlacer.cs" />
     <Compile Include="Assets\Scripts\Avatar.cs" />
     <Compile Include="Assets\Scripts\ChangeStartingButton.cs" />
     <Compile Include="Assets\Scripts\ClickQuit.cs" />
@@ -84,11 +86,13 @@
     <Compile Include="Assets\Scripts\CreditsHandler.cs" />
     <Compile Include="Assets\Scripts\CrossPlacer.cs" />
     <Compile Include="Assets\Scripts\Cs_RewardSystem.cs" />
+    <Compile Include="Assets\Scripts\Cs_ScoreboardLogic.cs" />
     <Compile Include="Assets\Scripts\EmptyPlacer.cs" />
     <Compile Include="Assets\Scripts\HUD.cs" />
     <Compile Include="Assets\Scripts\LoadScene.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MenuAudioSetup.cs" />
+    <Compile Include="Assets\Scripts\MultiWindow.cs" />
     <Compile Include="Assets\Scripts\PauseIt.cs" />
     <Compile Include="Assets\Scripts\PillarPlacer.cs" />
     <Compile Include="Assets\Scripts\Pipe.cs" />
@@ -100,6 +104,8 @@
     <Compile Include="Assets\Scripts\PostProcess.cs" />
     <Compile Include="Assets\Scripts\RandomPlacer.cs" />
     <Compile Include="Assets\Scripts\ScreenShake.cs" />
+    <Compile Include="Assets\Scripts\SlotPlacer.cs" />
+    <Compile Include="Assets\Scripts\SlotRemoval.cs" />
     <Compile Include="Assets\Scripts\SoundClass.cs" />
     <Compile Include="Assets\Scripts\SpiralPlacer.cs" />
     <Compile Include="Assets\Scripts\SplashScreen.cs" />
@@ -118,5 +124,5 @@
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
     <None Include="Assets\XInputDotNet\MITLicense.txt" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

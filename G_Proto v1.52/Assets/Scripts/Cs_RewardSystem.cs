@@ -74,10 +74,12 @@ public class Cs_RewardSystem : MonoBehaviour
 
          Outputs: None
     *******************************************************************************/
-    void LoadRewardsFromFile()
+    public void LoadRewardsFromFile()
     {
         // ui_HighScore =              (uint)PlayerPrefs.GetInt("HighScore");
         // ui_HighScore_LongestLife =  (uint)PlayerPrefs.GetInt("HighScore_LongestLife");
+
+        scoreboardInfo = new ScoreboardInfo();
 
         if (PlayerPrefs.HasKey("Name_1st"))
         {

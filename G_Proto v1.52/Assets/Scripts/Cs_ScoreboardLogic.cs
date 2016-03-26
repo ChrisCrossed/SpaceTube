@@ -73,7 +73,7 @@ public class Cs_ScoreboardLogic : MonoBehaviour
             ScoreLength_Curr[i] = 0;
 
             NameGroup[i].GetComponent<Text>().text = "";
-            // ScoreGroup[i].GetComponent<Text>().text = ScoreList[i];
+            ScoreGroup[i].GetComponent<Text>().text = "";
         }
     }
 
@@ -92,53 +92,41 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         ScoreGroup[4] = GameObject.Find("Score_5");
     }
 
-    void IncrementLetterVisibility()
+    void IncrementLetterVisibility(int currWord_, int currScore_)
     {
-        // print("Name Counter: " + i_NameCounter_);
-        /*
-        for (int j = 0; j < i_NameCounter; ++j)
-        {
-            if (NameLength_Curr[i_NameCounter] < NameLength[i_NameCounter])
-            {
-                NameGroup[j].GetComponent<Text>().text = "";
-
-                for (int i = 0; i < NameLength_Curr[i_NameCounter] + 1; ++i)
-                {
-                    char[] test = NameList[j].ToCharArray(i, 1);
-                    NameGroup[j].GetComponent<Text>().text += test[0];
-                }
-
-                ++NameLength_Curr[i_NameCounter];
-            }
-        }
-        */
-
         // Starts the current length of the word at 0 and checks that it is less than the length of the actual word
-
-        int daya = 1;
-        if (NameLength_Curr[daya] < NameLength[daya])
+        if (NameLength_Curr[currWord_] < NameLength[currWord_])
         {
             // Prints the reset text object at the current array position 
-            NameGroup[daya].GetComponent<Text>().text = "";
+            NameGroup[currWord_].GetComponent<Text>().text = "";
 
             // Prints up to the current length of the word
-            for (int i = 0; i < NameLength_Curr[daya] + 1; ++i)
+            for (int i = 0; i < NameLength_Curr[currWord_] + 1; ++i)
             {
                 // 
-                char[] test = NameList[daya].ToCharArray(i, 1);
-                NameGroup[daya].GetComponent<Text>().text += test[0];
+                char[] test = NameList[currWord_].ToCharArray(i, 1);
+                NameGroup[currWord_].GetComponent<Text>().text += test[0];
+                print(NameGroup[currWord_].GetComponent<Text>().text);
             }
 
-            ++NameLength_Curr[daya];
+            ++NameLength_Curr[currWord_];
         }
 
-        // char[] test = NameList[0].ToCharArray(0, 1);
-        // print(test[0]);
-
-        // Check through the current allowed words
-        for (int currLetter = 0; currLetter < NameLength[0]; ++currLetter)
+        if (ScoreLength_Curr[currScore_] < ScoreLength[currScore_])
         {
-            // NameGroup[0].GetComponent<Text>().text += NameList[currLetter].ToCharArray(currLetter, currLetter + 1);
+            // Prints the reset text object at the current array position 
+            ScoreGroup[currScore_].GetComponent<Text>().text = "";
+
+            // Prints up to the current length of the word
+            for (int i = 0; i < ScoreLength_Curr[currScore_] + 1; ++i)
+            {
+                // 
+                char[] test = ScoreList[currScore_].ToCharArray(i, 1);
+                ScoreGroup[currScore_].GetComponent<Text>().text += test[0];
+                print(ScoreGroup[currScore_].GetComponent<Text>().text);
+            }
+
+            ++ScoreLength_Curr[currScore_];
         }
     }
 
@@ -152,10 +140,14 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         if (f_Timer >= 0.5f + i_NameCounter) ++i_NameCounter;
         if (f_Timer >= 1.0f + i_ScoreCounter) ++i_ScoreCounter;
 
-        if (f_LetterTimer >= 0.1f) { IncrementLetterVisibility(); f_LetterTimer = 0f; }
-        i_NameCounter = 1; //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (f_LetterTimer >= 0.1f) { IncrementLetterVisibility(i_NameCounter, i_ScoreCounter); f_LetterTimer = 0f; }
+        
+        for(int i = 0; i < i_NameCounter; ++i)
+        {
+
+        }
 
         if (i_NameCounter >= 0) NameGroup[i_NameCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);
-        // if(i_ScoreCounter >= 0) ScoreGroup[i_ScoreCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);
+        if(i_ScoreCounter >= 0) ScoreGroup[i_ScoreCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);
     }
 }

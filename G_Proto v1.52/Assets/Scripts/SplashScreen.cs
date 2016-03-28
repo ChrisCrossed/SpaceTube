@@ -108,7 +108,7 @@ public class SplashScreen : MonoBehaviour
     {
         bFading = true;
         yield return new WaitForSeconds(6);
-        Application.LoadLevel(sLevelToLoad);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sLevelToLoad);
         cMainMenu.enabled = true;
         MainMenu.SetActive(true);
         ChangeButton.ChangeButton(ButtonTarget);

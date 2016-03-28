@@ -46,8 +46,8 @@ public class Player : MonoBehaviour
     //public AudioClip DeadNoise;
 
     public PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
+    //GamePadState state;
+    //GamePadState prevState;
 
     public void StartGame (int accelerationMode)
     {
@@ -98,8 +98,8 @@ public class Player : MonoBehaviour
 
 	private void Update ()
     {
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
+        //prevState = state;
+        //state = GamePad.GetState(playerIndex);
 
         velocity += acceleration * Time.deltaTime;
 		float delta = velocity * Time.deltaTime;

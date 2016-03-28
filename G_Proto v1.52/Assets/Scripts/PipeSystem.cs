@@ -15,7 +15,7 @@ public class PipeSystem : MonoBehaviour
     public float StartTime = 7;
     public float Timer;
 
-    private bool FirstGame = true;
+    //private bool FirstGame = true;
 
     private void Awake ()
     {
@@ -32,7 +32,7 @@ public class PipeSystem : MonoBehaviour
             pipe.transform.SetParent(transform, false);
             Application.targetFrameRate = 300;
         }
-        FirstGame = false;
+        //FirstGame = false;
     }
 
 	public Pipe SetupFirstPipe ()

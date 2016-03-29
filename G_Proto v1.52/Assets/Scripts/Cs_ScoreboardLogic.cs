@@ -28,16 +28,21 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     int i_ScoreCounter = -1;
 
     bool b_IsNewScore;
-    int i_ScorePos = 6;
+    int i_ScorePos;
     ScoreboardState scoreboardState;
     string s_PlayerName;
     GameObject VictoryTextObject;
     GameObject HighScoreNameObject;
     float f_flashTimer;
 
+    public GameObject MainMenu;
+    float f_ScoreboardTimer;
+
     // Use this for initialization
     void Start()
     {
+        s_PlayerName = "";
+        
         // StartShowScoreboard();
         // scoreboardState = ScoreboardState.Start;
     }
@@ -81,7 +86,15 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         LoadInformation();
 
         // Reset timers
-
+        f_Timer = -1f;
+        f_LetterTimer = -1f;
+        i_NameCounter = -1;
+        i_ScoreCounter = -1;
+        b_IsNewScore = false;
+        i_ScorePos = 0;
+        s_PlayerName = "";
+        f_flashTimer = 0f;
+        f_ScoreboardTimer = 0f;
 
         // Start all text as black
         for (int i = 0; i < 5; ++i)
@@ -218,13 +231,17 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         {
             #region Keyboard Input
             // Accept Keyboard Input
-            s_PlayerName += Input.inputString;
+            string keyInput = Input.inputString;
+            if (s_PlayerName.Length < 5 || s_PlayerName == "") s_PlayerName += keyInput;
+            if (s_PlayerName.Length == 0) s_PlayerName = "";
 
-            if (s_PlayerName.Contains(" ")) s_PlayerName.Replace(" ", "");
+            // if (s_PlayerName.Contains(" ")) s_PlayerName.Replace(" ", "");
 
             if(Input.GetKeyDown(KeyCode.Backspace) && s_PlayerName.Length > 1)
             {
                 s_PlayerName = s_PlayerName.Substring(0, s_PlayerName.Length - 2);
+
+                if (s_PlayerName.Length == 0) s_PlayerName = "";
             }
 
             // Flash the text on screen
@@ -268,14 +285,30 @@ public class Cs_ScoreboardLogic : MonoBehaviour
             #endregion
 
             // Accept Keypad Input
+            #region Controller Input
 
-            print("Current Name: " + s_PlayerName);
+            if(s_PlayerName.Length < 6)
+
+            #endregion
+
+            print("Current Length: " + s_PlayerName.Length);
 
         }
         else if (scoreboardState == ScoreboardState.Display)
         {
             // Otherwise...
             ShowLetters();
+
+            f_ScoreboardTimer += Time.deltaTime;
+
+            if(f_ScoreboardTimer >= 10f)
+            {
+                gameObject.SetActive(false);
+                gameObject.GetComponent<Canvas>().enabled = false;
+
+                MainMenu.SetActive(true);
+                MainMenu.GetComponent<Canvas>().enabled = true;
+            }
         }
     }
 }

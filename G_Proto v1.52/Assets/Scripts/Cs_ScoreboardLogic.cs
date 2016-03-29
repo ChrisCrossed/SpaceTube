@@ -129,8 +129,7 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void ShowLetters()
     {
         // Increment timer for next allowed word
         if (i_ScoreCounter < 4) f_Timer += Time.deltaTime;
@@ -139,14 +138,18 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         print("Length: " + NameLength_Curr[0]);
         print("Timer: " + f_LetterTimer);
 
-        if (f_Timer >= 0.5f + i_NameCounter) ++i_NameCounter;
+        if (f_Timer >= 0.5f + i_NameCounter)
+        {
+            ++i_NameCounter;
+        }
+
         if (f_Timer >= 1f + i_ScoreCounter) ++i_ScoreCounter;
 
-        if (f_LetterTimer >= 0.25f)
+        if (f_LetterTimer >= 0.05f)
         {
-            for(int j = 0; j < i_ScoreCounter + 1; ++j)
+            for (int j = 0; j < i_ScoreCounter + 1; ++j)
             {
-                for(int i = 0; i < i_NameCounter + 1; ++i)
+                for (int i = 0; i < i_NameCounter + 1; ++i)
                 {
                     IncrementLetterVisibility(i, j);
                 }
@@ -156,6 +159,12 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         }
 
         if (i_NameCounter >= 0) NameGroup[i_NameCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);
-        if(i_ScoreCounter >= 0) ScoreGroup[i_ScoreCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);
+        if (i_ScoreCounter >= 0) ScoreGroup[i_ScoreCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        ShowLetters();
     }
 }

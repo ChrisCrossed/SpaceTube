@@ -86,12 +86,19 @@ public class Avatar : MonoBehaviour
                 player.bDead = true;
 
                 // If score is good enough to be on the Scoreboard...
+                player.GetComponent<Cs_RewardSystem>().LoadRewardsFromFile();
                 int lowestScore = (int)player.GetComponent<Cs_RewardSystem>().GetScoreboardInfo().Score_5th;
+
                 if((int)(player.distanceTraveled * 10f) >= lowestScore)
                 {
+                    // DEBUG: State which position & score we are
+                    print("Player Score: " + (int)(player.distanceTraveled * 10f));
+                    print("Lowest Score: " + lowestScore);
+
                     // ... Start up the scoreboard and pass in the score
                     ScoreboardScreen.SetActive(true);
                     ScoreboardScreen.GetComponent<Canvas>().enabled = true;
+                    ScoreboardScreen.GetComponent<Cs_ScoreboardLogic>().SetPlayerScore((int)(player.distanceTraveled * 10f));
                 }
                 else
                 {

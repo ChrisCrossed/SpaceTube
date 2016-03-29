@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P))
         {
             distanceTraveled += 10;
-            print("Cheater!!!");
+            // print("Cheater!!!");
         }
 
         // Store the current distance travelled.

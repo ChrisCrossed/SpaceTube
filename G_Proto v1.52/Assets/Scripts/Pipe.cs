@@ -86,7 +86,7 @@ public class Pipe : MonoBehaviour {
                 //bPlaceEndItem = true;
                 generators[Random.Range(0, generators.Length)].GetComponent<PipeItemGenerator>().GenerateItems(this);
                 iEndItemTimer += 1;
-                print("Time for Norm " + iEndItemTimer);
+                // print("Time for Norm " + iEndItemTimer);
             }
 			
 		}

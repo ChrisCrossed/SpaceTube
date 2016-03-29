@@ -2,6 +2,14 @@
 using System.Collections;
 using UnityEngine.UI;
 
+enum ScoreboardState
+{
+    Start,
+    Display,
+    ReceiveName,
+    None
+}
+
 public class Cs_ScoreboardLogic : MonoBehaviour
 {
     GameObject[] NameGroup = new GameObject[5];
@@ -20,24 +28,48 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     int i_ScoreCounter = -1;
 
     bool b_IsNewScore;
+    int i_ScorePos = 6;
+    ScoreboardState scoreboardState;
+    string s_PlayerName;
+    GameObject VictoryTextObject;
+    GameObject HighScoreNameObject;
+    float f_flashTimer;
 
     // Use this for initialization
     void Start()
     {
         // StartShowScoreboard();
+        // scoreboardState = ScoreboardState.Start;
     }
 
     public void SetPlayerScore(int playerScore_)
     {
-        // We already determined that the player's score is greater than 5th place
-        // Determine what position the score is
+        StartShowScoreboard();
+
+        print("state: " + scoreboardState.ToString());
+
+        if(scoreboardState == ScoreboardState.Start)
+        {
+
+            // We already determined that the player's score is greater than 5th place
+            // Determine what position the score is
+            gameObject.GetComponent<Cs_RewardSystem>().LoadRewardsFromFile();
+            ScoreboardInfo scoreInfo = gameObject.GetComponent<Cs_RewardSystem>().GetScoreboardInfo();
+
+            if (playerScore_ > (int)scoreInfo.Score_5th) i_ScorePos = 5;
+            if (playerScore_ > (int)scoreInfo.Score_4th) i_ScorePos = 4;
+            if (playerScore_ > (int)scoreInfo.Score_3rd) i_ScorePos = 3;
+            if (playerScore_ > (int)scoreInfo.Score_2nd) i_ScorePos = 2;
+            if (playerScore_ > (int)scoreInfo.Score_1st) i_ScorePos = 1;
+
+            print("Player Score Position: " + i_ScorePos);
+
+        }
 
         // Ask for the player's name
+        scoreboardState = ScoreboardState.ReceiveName;
 
-        // Store the player's name & score in the Reward system
-
-        // Reload the Scoreboard & display
-
+        print("new state: " + scoreboardState.ToString());
     }
 
     public void StartShowScoreboard()
@@ -105,6 +137,9 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         ScoreGroup[2] = GameObject.Find("Score_3");
         ScoreGroup[3] = GameObject.Find("Score_4");
         ScoreGroup[4] = GameObject.Find("Score_5");
+
+        VictoryTextObject = GameObject.Find("VictoryTextObject");
+        HighScoreNameObject = GameObject.Find("HighScoreNameObject");
     }
 
     void IncrementLetterVisibility(int currWord_, int currScore_)
@@ -178,10 +213,69 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     void Update()
     {
         // Determine if the recent score goes on the Scoreboard
+        // If we are currently accepting user input...
+        if (scoreboardState == ScoreboardState.ReceiveName)
+        {
+            #region Keyboard Input
+            // Accept Keyboard Input
+            s_PlayerName += Input.inputString;
 
-        // If it doesn't...
+            if (s_PlayerName.Contains(" ")) s_PlayerName.Replace(" ", "");
 
-        // Otherwise...
-        ShowLetters();
+            if(Input.GetKeyDown(KeyCode.Backspace) && s_PlayerName.Length > 1)
+            {
+                s_PlayerName = s_PlayerName.Substring(0, s_PlayerName.Length - 2);
+            }
+
+            // Flash the text on screen
+            f_flashTimer += Time.deltaTime;
+            if (f_flashTimer >= 0.3f) HighScoreNameObject.GetComponent<Text>().text = "_" + s_PlayerName + "_";
+            else HighScoreNameObject.GetComponent<Text>().text = "_" + s_PlayerName + "|_";
+
+            if (f_flashTimer >= 0.6f) f_flashTimer = 0.0f;
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                // Store the player's name & score in the Reward system
+                ScoreboardInfo scoreInfo = gameObject.GetComponent<Cs_RewardSystem>().GetScoreboardInfo();
+
+                // Shift names down a position
+                for(int i = 5; i < i_ScorePos; --i)
+                {
+                    if (i == 5) scoreInfo.Name_5th = scoreInfo.Name_4th;
+                    if (i == 4) scoreInfo.Name_4th = scoreInfo.Name_3rd;
+                    if (i == 3) scoreInfo.Name_3rd = scoreInfo.Name_2nd;
+                    if (i == 2) scoreInfo.Name_2nd = scoreInfo.Name_1st;
+                }
+
+                // Store the new name
+                if (i_ScorePos == 5) scoreInfo.Name_5th = s_PlayerName;
+                if (i_ScorePos == 4) scoreInfo.Name_4th = s_PlayerName;
+                if (i_ScorePos == 3) scoreInfo.Name_3rd = s_PlayerName;
+                if (i_ScorePos == 2) scoreInfo.Name_2nd = s_PlayerName;
+                if (i_ScorePos == 1) scoreInfo.Name_1st = s_PlayerName;
+
+                // Reload the Scoreboard & display
+                gameObject.GetComponent<Cs_RewardSystem>().SetScoreboardInformation(scoreInfo);
+
+                VictoryTextObject.SetActive(false);
+                HighScoreNameObject.SetActive(false);
+
+                // Change state
+                StartShowScoreboard();
+                scoreboardState = ScoreboardState.Display;
+            }
+            #endregion
+
+            // Accept Keypad Input
+
+            print("Current Name: " + s_PlayerName);
+
+        }
+        else if (scoreboardState == ScoreboardState.Display)
+        {
+            // Otherwise...
+            ShowLetters();
+        }
     }
 }

@@ -10,6 +10,8 @@ public class Avatar : MonoBehaviour
     public Text ScoreLabel;
 	public ParticleSystem trail, burst;
 
+    public GameObject ScoreboardScreen;
+
     public Renderer Body, Booster;
 	public Player player;
 
@@ -82,9 +84,26 @@ public class Avatar : MonoBehaviour
                 emTrail.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
                 player.bDead = true;
-                DeadScreen.SetActive(true);
-                DeadScreen.GetComponent<Canvas>().enabled = true;
-                ScoreLabel.text = ((int)(player.distanceTraveled * 10f)).ToString();
+
+                // If score is good enough to be on the Scoreboard...
+                int lowestScore = (int)player.GetComponent<Cs_RewardSystem>().GetScoreboardInfo().Score_5th;
+                if((int)(player.distanceTraveled * 10f) >= lowestScore)
+                {
+                    // ... Start up the scoreboard and pass in the score
+                    ScoreboardScreen.SetActive(true);
+                    ScoreboardScreen.GetComponent<Canvas>().enabled = true;
+                }
+                else
+                {
+                    // Otherwise, load the normal death screen
+                    DeadScreen.SetActive(true);
+                    DeadScreen.GetComponent<Canvas>().enabled = true;
+                    ScoreLabel.text = ((int)(player.distanceTraveled * 10f)).ToString();
+                }
+                // print(player.GetComponent<Cs_RewardSystem>().GetScoreboardInfo());
+
+
+                
                 player.Die();          
             }
 		}

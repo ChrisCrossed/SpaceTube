@@ -19,10 +19,25 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     int i_NameCounter = -1;
     int i_ScoreCounter = -1;
 
+    bool b_IsNewScore;
+
     // Use this for initialization
     void Start()
     {
-        StartShowScoreboard();
+        // StartShowScoreboard();
+    }
+
+    public void SetPlayerScore(int playerScore_)
+    {
+        // We already determined that the player's score is greater than 5th place
+        // Determine what position the score is
+
+        // Ask for the player's name
+
+        // Store the player's name & score in the Reward system
+
+        // Reload the Scoreboard & display
+
     }
 
     public void StartShowScoreboard()
@@ -138,10 +153,7 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         print("Length: " + NameLength_Curr[0]);
         print("Timer: " + f_LetterTimer);
 
-        if (f_Timer >= 0.5f + i_NameCounter)
-        {
-            ++i_NameCounter;
-        }
+        if (f_Timer >= 0.5f + i_NameCounter) ++i_NameCounter;
 
         if (f_Timer >= 1f + i_ScoreCounter) ++i_ScoreCounter;
 
@@ -165,6 +177,11 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Determine if the recent score goes on the Scoreboard
+
+        // If it doesn't...
+
+        // Otherwise...
         ShowLetters();
     }
 }

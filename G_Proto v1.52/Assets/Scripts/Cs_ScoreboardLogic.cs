@@ -95,6 +95,8 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         s_PlayerName = "";
         f_flashTimer = 0f;
         f_ScoreboardTimer = 0f;
+        HighScoreNameObject.GetComponent<Text>().color = new Color(1, 1, 1, 1);
+        VictoryTextObject.GetComponent<Text>().color = new Color(1, 1, 1, 1);
 
         // Start all text as black
         for (int i = 0; i < 5; ++i)
@@ -220,6 +222,9 @@ public class Cs_ScoreboardLogic : MonoBehaviour
 
         if (i_NameCounter >= 0) NameGroup[i_NameCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);
         if (i_ScoreCounter >= 0) ScoreGroup[i_ScoreCounter].GetComponent<Text>().color = new Color(1, 1, 1, 1);
+
+        VictoryTextObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        HighScoreNameObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
     }
 
     // Update is called once per frame
@@ -275,8 +280,8 @@ public class Cs_ScoreboardLogic : MonoBehaviour
                 // Reload the Scoreboard & display
                 gameObject.GetComponent<Cs_RewardSystem>().SetScoreboardInformation(scoreInfo);
 
-                VictoryTextObject.SetActive(false);
-                HighScoreNameObject.SetActive(false);
+                VictoryTextObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
+                HighScoreNameObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
 
                 // Change state
                 StartShowScoreboard();
@@ -303,6 +308,11 @@ public class Cs_ScoreboardLogic : MonoBehaviour
 
             if(f_ScoreboardTimer >= 10f)
             {
+                GameObject player = GameObject.Find("Player");
+                player.GetComponent<Player>().Die();
+                player.GetComponent<Player>().Reset();
+                player.GetComponentInChildren<Avatar>().Reset();
+
                 gameObject.SetActive(false);
                 gameObject.GetComponent<Canvas>().enabled = false;
 

@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
 #endif
 
 namespace UnityStandardAssets.Utility
@@ -84,7 +83,7 @@ namespace UnityStandardAssets.Utility
             
             // Note from Chris - Attempting to fix the warning. Talk to me if/when this breaks.
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            // Application.LoadLevel(Application.loadedLevel);
+            //Application.LoadLevel(Application.loadedLevel);
         }
     }
 }

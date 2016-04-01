@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P))
         {
             distanceTraveled += 10;
-            print("Cheater!!!");
+            //print("Cheater!!!");
         }
 
         // Store the current distance travelled.
@@ -254,6 +254,11 @@ public class Player : MonoBehaviour
         GamePad.SetVibration(playerIndex, 1f, 1f);
         yield return new WaitForSeconds(0.25f);
         GamePad.SetVibration(playerIndex, 0f, 0f);
+    }
+
+    void OnTriggerEnter(Collider coll)
+    {
+        Destroy(coll.gameObject);
     }
 
 }

@@ -22,6 +22,7 @@ public class PauseIt : MonoBehaviour {
 
     public bool bInHowtoPlay;
     private bool bIsPaused;
+    private bool audioPaused;
 
     public PlayerIndex playerIndex;
     GamePadState state;
@@ -31,6 +32,7 @@ public class PauseIt : MonoBehaviour {
     void Start ()
     {
         //bInGame = false;
+      audioPaused = false;
 	}
 	
 	// Update is called once per frame
@@ -59,6 +61,16 @@ public class PauseIt : MonoBehaviour {
             bIsPaused = false;
             gPauseMenu.SetActive(false);
             cPauseMenu.enabled = false;
+            if(audioPaused == true)
+            {
+              AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+              foreach (AudioSource sound in sounds)
+              {
+                //sound.Play();
+                sound.mute = false;
+              }
+              audioPaused = false;
+            }
         }
         else
         {
@@ -67,6 +79,16 @@ public class PauseIt : MonoBehaviour {
             gPauseMenu.SetActive(true);
             cPauseMenu.enabled = true;
             changeButton.ChangeButton(buttonTarget);
+            AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+            if (audioPaused == false)
+            {
+              foreach (AudioSource sound in sounds)
+              {
+                //sound.Stop();
+                sound.mute = true;
+              }
+              audioPaused = true;
+            }
         }
     }
 
@@ -86,6 +108,7 @@ public class PauseIt : MonoBehaviour {
         gPauseMenu.SetActive(false);
         cPauseMenu.enabled = false;
         cHowToPlay.enabled = false;
+        
     }
 
 

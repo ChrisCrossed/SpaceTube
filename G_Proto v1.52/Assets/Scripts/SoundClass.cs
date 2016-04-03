@@ -65,7 +65,7 @@ public class SoundClass : MonoBehaviour {
         else
         {
 
-            print("No Sound");
+            //print("No Sound");
 
         }
     }
@@ -126,7 +126,7 @@ public class SoundClass : MonoBehaviour {
         asObjectsAudio.PlayOneShot(INacAudioToResume);
         int Timmy = asObjectsAudio.timeSamples + ifResumeFrom;
         asObjectsAudio.timeSamples = Timmy;
-        print("Post Time " + asObjectsAudio.timeSamples);
+        //print("Post Time " + asObjectsAudio.timeSamples);
 
     }
 

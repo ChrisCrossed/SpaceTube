@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
 
 	public void StartGame (int mode)
     {
-        print("Corutine?");
+        //print("Corutine?");
         StartCoroutine(Begin(mode));
 
     }
@@ -75,9 +75,9 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator Begin(int mode)
     {
-        print("begin");        
+        //print("begin");        
         yield return new WaitForSeconds(1.5f);
-        print("yielded");
+        //print("yielded");
         player.StartGame(mode);
         player.GetComponent<SoundClass>().SetAudioObject();
         player.GetComponent<SoundClass>().PlayInportedSound(StartNoise, false);

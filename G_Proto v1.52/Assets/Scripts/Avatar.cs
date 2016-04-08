@@ -70,8 +70,8 @@ public class Avatar : MonoBehaviour
 	
 	private void Update ()
     {
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
+        //prevState = state;
+        //state = GamePad.GetState(playerIndex);
 
         hud.SetHP(currentHP);
         if (isDead)

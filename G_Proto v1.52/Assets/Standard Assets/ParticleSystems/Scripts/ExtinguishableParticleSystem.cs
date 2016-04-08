@@ -21,7 +21,9 @@ namespace UnityStandardAssets.Effects
         {
             foreach (var system in m_Systems)
             {
-                system.enableEmission = false;
+                //system.enableEmission = false;
+                ParticleSystem.EmissionModule em = system.emission;
+                em.enabled = false;
             }
         }
     }

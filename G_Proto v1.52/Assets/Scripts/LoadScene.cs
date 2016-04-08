@@ -7,6 +7,6 @@ public class LoadScene : MonoBehaviour
 	// Use this for initialization
     public void ClickLoad(string Level)
     {
-        Application.LoadLevel(Level);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Level);
     }
 }

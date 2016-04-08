@@ -250,6 +250,11 @@ public class Player : MonoBehaviour
         mainMenu.EndGame(distanceTraveled);
     }
 
+    void OnTriggerEnter(Collider coll)
+    {
+        Destroy(coll.gameObject);
+    }
+
     IEnumerator TimedVibration()
     {
         GamePad.SetVibration(playerIndex, 1f, 1f);

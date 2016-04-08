@@ -57,6 +57,7 @@ public class PauseIt : MonoBehaviour {
     {
         if (bIsPaused == true)
         {
+            Cursor.visible = false;
             Time.timeScale = 1;
             bIsPaused = false;
             gPauseMenu.SetActive(false);
@@ -74,6 +75,8 @@ public class PauseIt : MonoBehaviour {
         }
         else
         {
+            GamePad.SetVibration(playerIndex, 0, 0);
+            Cursor.visible = true;
             Time.timeScale = 0;
             bIsPaused = true;
             gPauseMenu.SetActive(true);
@@ -103,6 +106,7 @@ public class PauseIt : MonoBehaviour {
 
     public void Resume()
     {
+        Cursor.visible = false;
         Time.timeScale = 1;
         bIsPaused = false;
         gPauseMenu.SetActive(false);

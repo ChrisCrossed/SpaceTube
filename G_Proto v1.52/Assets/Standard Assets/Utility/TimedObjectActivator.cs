@@ -82,8 +82,8 @@ namespace UnityStandardAssets.Utility
             yield return new WaitForSeconds(entry.delay);
             
             // Note from Chris - Attempting to fix the warning. Talk to me if/when this breaks.
-            // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //Application.LoadLevel(Application.loadedLevel);
         }
     }
 }

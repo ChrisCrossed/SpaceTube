@@ -37,6 +37,7 @@ public class Avatar : MonoBehaviour
 
     private void OnEnable()
     {
+        Cursor.visible = false;
         currentHP = HP;
         isDead = false;
         fHits = 0;
@@ -106,7 +107,8 @@ public class Avatar : MonoBehaviour
                     ScoreLabel.text = (playerScore).ToString();
                 }
                 // print(player.GetComponent<Cs_RewardSystem>().GetScoreboardInfo());
-                
+
+                Cursor.visible = true;
                 player.Die();          
             }
 		}

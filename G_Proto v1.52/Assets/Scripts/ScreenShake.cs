@@ -15,7 +15,7 @@ public class ScreenShake : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if(bShake)
+        if (bShake && Time.timeScale != 0)
         {
             transform.localPosition = Random.insideUnitSphere * ShakeAmount;
         }

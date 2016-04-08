@@ -26,6 +26,9 @@ public class Avatar : MonoBehaviour
     public Transform car;
     public ScreenShake Shake;
 
+    public ChangeStartingButton changeButton;
+    public GameObject buttonTarget;
+
     public PlayerIndex playerIndex;
     GamePadState state;
     GamePadState prevState;
@@ -102,6 +105,7 @@ public class Avatar : MonoBehaviour
                 else
                 {
                     // Otherwise, load the normal death screen
+                    changeButton.ChangeButton(buttonTarget);
                     DeadScreen.SetActive(true);
                     DeadScreen.GetComponent<Canvas>().enabled = true;
                     ScoreLabel.text = (playerScore).ToString();

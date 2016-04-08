@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-enum ScoreboardState
+public enum ScoreboardState
 {
     Start,
     Display,
@@ -47,15 +47,19 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         // scoreboardState = ScoreboardState.Start;
     }
 
+    public void SetScoreboardState(ScoreboardState scoreboardState_)
+    {
+        scoreboardState = scoreboardState_;
+    }
+
     public void SetPlayerScore(int playerScore_)
     {
-        StartShowScoreboard();
+        i_ScorePos = 0;
 
-        print("state: " + scoreboardState.ToString());
+        StartShowScoreboard();
 
         if(scoreboardState == ScoreboardState.Start)
         {
-
             // We already determined that the player's score is greater than 5th place
             // Determine what position the score is
             gameObject.GetComponent<Cs_RewardSystem>().LoadRewardsFromFile();
@@ -68,13 +72,12 @@ public class Cs_ScoreboardLogic : MonoBehaviour
             if (playerScore_ > (int)scoreInfo.Score_1st) i_ScorePos = 1;
 
             print("Player Score Position: " + i_ScorePos);
+            print("Player Score: " + playerScore_);
+            gameObject.GetComponent<Cs_RewardSystem>().SetScoreOnDeath(playerScore_);
 
+            // Ask for the player's name
+            scoreboardState = ScoreboardState.ReceiveName;
         }
-
-        // Ask for the player's name
-        scoreboardState = ScoreboardState.ReceiveName;
-
-        print("new state: " + scoreboardState.ToString());
     }
 
     public void StartShowScoreboard()
@@ -187,7 +190,6 @@ public class Cs_ScoreboardLogic : MonoBehaviour
                 // 
                 char[] test = ScoreList[currScore_].ToCharArray(i, 1);
                 ScoreGroup[currScore_].GetComponent<Text>().text += test[0];
-                print(ScoreGroup[currScore_].GetComponent<Text>().text);
             }
 
             ++ScoreLength_Curr[currScore_];
@@ -199,9 +201,6 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         // Increment timer for next allowed word
         if (i_ScoreCounter < 4) f_Timer += Time.deltaTime;
         f_LetterTimer += Time.deltaTime;
-
-        print("Length: " + NameLength_Curr[0]);
-        print("Timer: " + f_LetterTimer);
 
         if (f_Timer >= 0.5f + i_NameCounter) ++i_NameCounter;
 
@@ -261,8 +260,10 @@ public class Cs_ScoreboardLogic : MonoBehaviour
                 // Store the player's name & score in the Reward system
                 ScoreboardInfo scoreInfo = gameObject.GetComponent<Cs_RewardSystem>().GetScoreboardInfo();
 
+                print("The Score Position: " + i_ScorePos);
+
                 // Shift names down a position
-                for(int i = 5; i < i_ScorePos; --i)
+                for (int i = 5; i > i_ScorePos; --i)
                 {
                     if (i == 5) scoreInfo.Name_5th = scoreInfo.Name_4th;
                     if (i == 4) scoreInfo.Name_4th = scoreInfo.Name_3rd;
@@ -279,6 +280,7 @@ public class Cs_ScoreboardLogic : MonoBehaviour
 
                 // Reload the Scoreboard & display
                 gameObject.GetComponent<Cs_RewardSystem>().SetScoreboardInformation(scoreInfo);
+                
 
                 VictoryTextObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
                 HighScoreNameObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
@@ -291,12 +293,8 @@ public class Cs_ScoreboardLogic : MonoBehaviour
 
             // Accept Keypad Input
             #region Controller Input
-
-            if(s_PlayerName.Length < 6)
-
+        
             #endregion
-
-            print("Current Length: " + s_PlayerName.Length);
 
         }
         else if (scoreboardState == ScoreboardState.Display)

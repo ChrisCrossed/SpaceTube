@@ -40,8 +40,8 @@ public class Cs_RewardSystem : MonoBehaviour
     string Name_1st = "Alpha";
     string Name_2nd = "Beta";
     string Name_3rd = "Charlie";
-    string Name_4th = "Echo";
-    string Name_5th = "Delta";
+    string Name_4th = "Delta";
+    string Name_5th = "Echo";
     uint Score_1st = 1000;
     uint Score_2nd = 900;
     uint Score_3rd = 800;
@@ -334,8 +334,8 @@ public class Cs_RewardSystem : MonoBehaviour
         scoreboardInfo.Name_1st = "Alpha";
         scoreboardInfo.Name_2nd = "Beta";
         scoreboardInfo.Name_3rd = "Charlie";
-        scoreboardInfo.Name_4th = "Echo";
-        scoreboardInfo.Name_5th = "Delta";
+        scoreboardInfo.Name_4th = "Delta";
+        scoreboardInfo.Name_5th = "Echo";
         scoreboardInfo.Score_1st = 1000;
         scoreboardInfo.Score_2nd = 900;
         scoreboardInfo.Score_3rd = 800;

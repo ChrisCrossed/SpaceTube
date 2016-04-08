@@ -78,7 +78,8 @@ public class Player : MonoBehaviour
         mainMenu.BGMPlayer.GetComponent<SoundClass>().Stop();
         // Pass along this live's score to the RewardSystem
         // gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.HighScore, (int)(distanceTraveled * 10));
-        gameObject.GetComponent<Cs_RewardSystem>().SetScoreOnDeath((int)(distanceTraveled * 10));
+
+        // Convert over to Scoreboard instead
     }
 
 	private void Awake () {

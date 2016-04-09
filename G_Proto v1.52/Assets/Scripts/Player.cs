@@ -54,7 +54,6 @@ public class Player : MonoBehaviour
 
     private float fDeadTimer;
     
-
     private Transform world, rotater;
     public Transform car;
 
@@ -68,7 +67,13 @@ public class Player : MonoBehaviour
     GamePadState state;
     GamePadState prevState;
 
-    public void StartGame (int accelerationMode)
+    // Camera Rotation information
+    public GameObject playerCam;
+    float f_CamRotation;
+    bool b_CamLockedToPlayerRot;
+    int accelerationMode;
+
+    public void StartGame(int accelerationMode_)
     {
         print("start game");
         distanceTraveled = 0f;
@@ -76,7 +81,7 @@ public class Player : MonoBehaviour
 		systemRotation = 0f;
 		worldRotation = 0f;
         rotationInput = 0f;
-		acceleration = accelerations[accelerationMode];
+		acceleration = accelerations[accelerationMode_];
 		velocity = startVelocity;
         pipeSystem.StartGame();
 		currentPipe = pipeSystem.SetupFirstPipe();
@@ -87,6 +92,9 @@ public class Player : MonoBehaviour
         mrCarRender.enabled = true;
         mrCollider.enabled = true;
         iParticleAmount = 10;
+
+        // Store acceleration mode
+        accelerationMode = accelerationMode_;
     }
 
 	public void Die ()
@@ -114,6 +122,38 @@ public class Player : MonoBehaviour
         // Pass to the RewardSystem that they took a hit
         // gameObject.GetComponent<Cs_RewardSystem>().SetRewardInformation(AchievementTypes.LongestLife, (int)(distanceTraveled_OneLife * 10));
         distanceTraveled_OneLife = 0f;
+    }
+
+    private void LateUpdate()
+    {
+        // GUYS TEST THIS RIGHT HERE: CHANGE TRUE & FALSE
+        bool b_LerpSlow = true;
+
+        float f_LerpSpeed;
+        if (b_LerpSlow) f_LerpSpeed = 0.1f; else f_LerpSpeed = 1.0f;
+
+        // Easy mode
+        if(accelerationMode == 0)
+        {
+            // Rotate the camera to match the player
+            Vector3 camRot = playerCam.transform.eulerAngles;
+            print(Mathf.LerpAngle(camRot.z, avatarRotation, f_LerpSpeed));
+            camRot.z = Mathf.LerpAngle(camRot.z, avatarRotation, f_LerpSpeed);
+            playerCam.transform.eulerAngles = camRot;
+        }
+        // Medium Difficulty
+        else if(accelerationMode == 1)
+        {
+
+        }
+        // Hard Mode
+        else if (accelerationMode == 2)
+        {
+            // Slowly rotates the camera around
+            Vector3 camRot = playerCam.transform.eulerAngles;
+            camRot.z += Time.deltaTime * 15;
+            playerCam.transform.eulerAngles = camRot;    
+        }
     }
 
 	private void Update ()
@@ -181,7 +221,7 @@ public class Player : MonoBehaviour
 
 	private void UpdateAvatarRotation ()
     {
-         
+        print(avatarRotation);
 		rotationInput = Input.GetAxis("Horizontal");
 
         if(bAutoPlay)

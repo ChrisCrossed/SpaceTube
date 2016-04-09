@@ -59,7 +59,9 @@ public class Avatar : MonoBehaviour
 
     private void OnEnable()
     {
+        #if !UNITY_EDITOR
         Cursor.visible = false;
+        #endif
         currentHP = HP;
         isDead = false;
         fHits = 0;

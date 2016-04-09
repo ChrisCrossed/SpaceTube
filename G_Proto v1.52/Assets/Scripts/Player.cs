@@ -196,12 +196,14 @@ public class Player : MonoBehaviour
 		if (avatarRotation < 0f)
         {
 			avatarRotation += 360f;
-		}
+            pFastTrail.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
 
 		else if (avatarRotation >= 360f)
         {
 			avatarRotation -= 360f;
-		}
+            pFastTrail.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
 
         if (Input.GetButton("Jump"))
         {

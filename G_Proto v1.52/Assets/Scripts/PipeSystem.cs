@@ -1,4 +1,23 @@
-﻿using UnityEngine;
+﻿/*******************************  SpaceTube  *********************************
+Author: Daya Singh
+Contributors:
+Course: GAM350
+Game:   G_Proto
+Date:   4/8/16
+File:   PipeSystem.cs
+
+Description:
+Handles the whole pipe system
+
+Current Problems:
+
+
+Copyright (C) 2016 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+******************************************************************************/
+
+using UnityEngine;
 
 public class PipeSystem : MonoBehaviour
 {

@@ -90,8 +90,8 @@ public class Cs_ScoreboardLogic : MonoBehaviour
             if (playerScore_ > (int)scoreInfo.Score_2nd) i_ScorePos = 2;
             if (playerScore_ > (int)scoreInfo.Score_1st) i_ScorePos = 1;
 
-            print("Player Score Position: " + i_ScorePos);
-            print("Player Score: " + playerScore_);
+            //print("Player Score Position: " + i_ScorePos);
+            //print("Player Score: " + playerScore_);
             gameObject.GetComponent<Cs_RewardSystem>().SetScoreOnDeath(playerScore_);
 
             // Ask for the player's name
@@ -279,7 +279,7 @@ public class Cs_ScoreboardLogic : MonoBehaviour
                 // Store the player's name & score in the Reward system
                 ScoreboardInfo scoreInfo = gameObject.GetComponent<Cs_RewardSystem>().GetScoreboardInfo();
 
-                print("The Score Position: " + i_ScorePos);
+                //print("The Score Position: " + i_ScorePos);
 
                 // Shift names down a position
                 for (int i = 5; i > i_ScorePos; --i)

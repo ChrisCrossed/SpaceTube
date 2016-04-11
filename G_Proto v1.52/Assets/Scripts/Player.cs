@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
 
     public PlayerIndex playerIndex;
     GamePadState state;
-    GamePadState prevState;
+    //GamePadState prevState;
 
     // Camera Rotation information
     public GameObject playerCam;
@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
 
     public void StartGame(int accelerationMode_)
     {
-        print("start game");
+        //print("start game");
         distanceTraveled = 0f;
 		avatarRotation = 0f;
 		systemRotation = 0f;
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         {
             // Rotate the camera to match the player
             Vector3 camRot = playerCam.transform.eulerAngles;
-            print(Mathf.LerpAngle(camRot.z, avatarRotation, f_LerpSpeed));
+            //print(Mathf.LerpAngle(camRot.z, avatarRotation, f_LerpSpeed));
             camRot.z = Mathf.LerpAngle(camRot.z, avatarRotation, f_LerpSpeed);
             playerCam.transform.eulerAngles = camRot;
         }
@@ -158,7 +158,7 @@ public class Player : MonoBehaviour
 
 	private void Update ()
     {
-        prevState = state;
+        //prevState = state;
         state = GamePad.GetState(playerIndex);
 
         velocity += acceleration * Time.deltaTime;
@@ -221,7 +221,7 @@ public class Player : MonoBehaviour
 
 	private void UpdateAvatarRotation ()
     {
-        print(avatarRotation);
+        //print(avatarRotation);
 		rotationInput = Input.GetAxis("Horizontal");
 
         if(bAutoPlay)

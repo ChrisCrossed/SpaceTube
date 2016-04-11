@@ -20,6 +20,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 using UnityEngine;
 using System.Collections;
 using XInputDotNetPure;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -69,7 +70,6 @@ public class Player : MonoBehaviour
 
     // Camera Rotation information
     public GameObject playerCam;
-    float f_CamRotation;
     bool b_CamLockedToPlayerRot;
     int accelerationMode;
 
@@ -95,6 +95,10 @@ public class Player : MonoBehaviour
 
         // Store acceleration mode
         accelerationMode = accelerationMode_;
+
+        Vector3 camRot = playerCam.transform.eulerAngles;
+        camRot.z = 0f;
+        playerCam.transform.eulerAngles = camRot;
     }
 
 	public void Die ()
@@ -124,41 +128,34 @@ public class Player : MonoBehaviour
         distanceTraveled_OneLife = 0f;
     }
 
+    public void ToggleCameraLock()
+    {
+        b_CamLockedToPlayerRot = !b_CamLockedToPlayerRot;
+
+        string tempStr;
+
+        if(b_CamLockedToPlayerRot) tempStr = "Camera: Locked To Ship";
+        else tempStr = "Camera: Unlocked";
+
+        GameObject.Find("LockCameraButton").GetComponentInChildren<Text>().text = tempStr;
+    }
+
     private void LateUpdate()
     {
-        // GUYS TEST THIS RIGHT HERE: CHANGE TRUE & FALSE
-        bool b_LerpSlow = true;
+        Vector3 camRot = playerCam.transform.eulerAngles;
 
-        float f_LerpSpeed;
-        if (b_LerpSlow) f_LerpSpeed = 0.035f; else f_LerpSpeed = 1.0f;
-
-        // Easy mode
-        if(accelerationMode == 0)
+        if(b_CamLockedToPlayerRot)
         {
             // Rotate the camera to match the player
-            Vector3 camRot = playerCam.transform.eulerAngles;
-
-            camRot.z = Mathf.LerpAngle(camRot.z, avatarRotation, f_LerpSpeed);
-            print(camRot.z + ", " + avatarRotation);
-
-            // if (avatarRotation - camRot.z > 45f && avatarRotation > 0) camRot.z = avatarRotation - 45f;
-            // else if (avatarRotation - camRot.z < -45f && avatarRotation < 360) camRot.z = avatarRotation + 45f;
-
-            playerCam.transform.eulerAngles = camRot;
+            camRot.z = Mathf.LerpAngle(camRot.z, avatarRotation, 0.035f);
         }
-        // Medium Difficulty
-        else if(accelerationMode == 1)
+        else
         {
+            // Bring the camera back to 0 degrees
+            camRot.z = Mathf.LerpAngle(camRot.z, 0, 0.035f);
+        }
 
-        }
-        // Hard Mode
-        else if (accelerationMode == 2)
-        {
-            // Slowly rotates the camera around
-            Vector3 camRot = playerCam.transform.eulerAngles;
-            camRot.z += Time.deltaTime * 15;
-            playerCam.transform.eulerAngles = camRot;    
-        }
+        playerCam.transform.eulerAngles = camRot;
     }
 
 	private void Update ()

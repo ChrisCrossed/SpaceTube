@@ -81,16 +81,8 @@ public class PauseIt : MonoBehaviour {
             bIsPaused = false;
             gPauseMenu.SetActive(false);
             cPauseMenu.enabled = false;
-            if(audioPaused == true)
-            {
-              AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
-              foreach (AudioSource sound in sounds)
-              {
-                //sound.Play();
-                sound.mute = false;
-              }
-              audioPaused = false;
-            }
+            AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
+            BGM.volume *= (10.0f / 3.0f);
         }
         else
         {
@@ -101,16 +93,9 @@ public class PauseIt : MonoBehaviour {
             gPauseMenu.SetActive(true);
             cPauseMenu.enabled = true;
             changeButton.ChangeButton(buttonTarget);
-            AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
-            if (audioPaused == false)
-            {
-              foreach (AudioSource sound in sounds)
-              {
-                //sound.Stop();
-                sound.mute = true;
-              }
-              audioPaused = true;
-            }
+
+            AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
+            BGM.volume *= 0.3f;
         }
     }
 

@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
 
     public PlayerIndex playerIndex;
     GamePadState state;
-    GamePadState prevState;
+    //GamePadState prevState;
 
     // Camera Rotation information
     public GameObject playerCam;
@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
 
     public void StartGame(int accelerationMode_)
     {
-        print("start game");
+        //print("start game");
         distanceTraveled = 0f;
 		avatarRotation = 0f;
 		systemRotation = 0f;
@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
 
 	private void Update ()
     {
-        prevState = state;
+        //prevState = state;
         state = GamePad.GetState(playerIndex);
 
         velocity += acceleration * Time.deltaTime;

@@ -319,7 +319,7 @@ public class Cs_RewardSystem : MonoBehaviour
 *******************************************************************************/
     public void SetScoreboardInformation(ScoreboardInfo scoreboardInfo_)
     {
-        print("New 5th: " + scoreboardInfo_.Score_5th);
+        //print("New 5th: " + scoreboardInfo_.Score_5th);
 
         scoreboardInfo.Score_1st = scoreboardInfo_.Score_1st;
         scoreboardInfo.Score_2nd = scoreboardInfo_.Score_2nd;
@@ -363,7 +363,7 @@ public class Cs_RewardSystem : MonoBehaviour
         scoreboardInfo.Score_4th = 700;
         scoreboardInfo.Score_5th = 600;
 
-        print(scoreboardInfo.Name_1st);
+        //print(scoreboardInfo.Name_1st);
 
         SaveRewardsToFile();
     }

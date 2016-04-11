@@ -20,6 +20,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 public enum ScoreboardState
 {
@@ -57,10 +58,15 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     public GameObject MainMenu;
     float f_ScoreboardTimer;
 
+    PlayerIndex playerIndex;
+    GamePadState state;
+    GamePadState prevState;
+
     // Use this for initialization
     void Start()
     {
         s_PlayerName = "";
+        playerIndex = PlayerIndex.One;
         
         // StartShowScoreboard();
         // scoreboardState = ScoreboardState.Start;
@@ -245,6 +251,45 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         HighScoreNameObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
     }
 
+    void ScoreboardIncrementLetter()
+    {
+        // Preload the name if empty
+        if (s_PlayerName.Length == 0) s_PlayerName = "A";
+        else
+        {
+            // Get the last letter of the player name
+            int lastLetterAsInt = s_PlayerName[s_PlayerName.Length - 1];
+
+            // Increment the letter
+            if (lastLetterAsInt < 90) lastLetterAsInt += 1; else lastLetterAsInt = 65;
+
+            // Convert to char
+            char newLastLetter = (char)lastLetterAsInt;
+
+            // Cut off the last letter & replace it with the new letter
+            if (s_PlayerName.Length > 1) s_PlayerName = s_PlayerName.Substring(0, s_PlayerName.Length - 1) + newLastLetter;
+            else s_PlayerName = newLastLetter.ToString();
+        }
+    }
+
+    void ScoreboardDecrementLetter()
+    {
+        if (s_PlayerName.Length == 0) s_PlayerName = "Z";
+        else
+        {
+            // Get the last letter of the player name
+            int lastLetterAsInt = s_PlayerName[s_PlayerName.Length - 1];
+
+            if (lastLetterAsInt > 65) lastLetterAsInt -= 1; else lastLetterAsInt = 90;
+
+            char newLastLetter = (char)lastLetterAsInt;
+
+            // Cut off the last letter & replace it with the new letter
+            if (s_PlayerName.Length > 1) s_PlayerName = s_PlayerName.Substring(0, s_PlayerName.Length - 1) + newLastLetter;
+            else s_PlayerName = newLastLetter.ToString();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -273,8 +318,37 @@ public class Cs_ScoreboardLogic : MonoBehaviour
             else HighScoreNameObject.GetComponent<Text>().text = "_" + s_PlayerName + "|_";
 
             if (f_flashTimer >= 0.6f) f_flashTimer = 0.0f;
+            #endregion
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            // Record input
+            prevState = state;
+            state = GamePad.GetState(playerIndex);
+
+            // Accept Keypad Input
+            #region Controller Input
+
+            // If the player presses up, we need to take the last letter and 'increase' the character.
+            if((state.ThumbSticks.Left.Y >= 0.1f && prevState.ThumbSticks.Left.Y < 0.1f) || (state.DPad.Up == ButtonState.Pressed && prevState.DPad.Up == ButtonState.Released))
+            {
+                ScoreboardIncrementLetter();
+            }
+            else if((state.ThumbSticks.Left.Y <= -0.1f && prevState.ThumbSticks.Left.Y > -0.1f) || (state.DPad.Down == ButtonState.Pressed && prevState.DPad.Down == ButtonState.Released))
+            {
+                ScoreboardDecrementLetter();
+            }
+            else if(((state.ThumbSticks.Left.X >= 0.1f && prevState.ThumbSticks.Left.X <= 0.1f) && s_PlayerName.Length < 5 ) || 
+                (state.DPad.Right == ButtonState.Pressed && prevState.DPad.Right == ButtonState.Released) && s_PlayerName.Length < 5)
+            {
+                s_PlayerName = s_PlayerName + "A";
+            }
+            else if ((state.ThumbSticks.Left.X <= -0.1f && prevState.ThumbSticks.Left.X > -0.1f) || (state.DPad.Left == ButtonState.Pressed && prevState.DPad.Left == ButtonState.Released))
+            {
+                if (s_PlayerName.Length > 0) s_PlayerName = s_PlayerName.Substring(0, s_PlayerName.Length - 1);
+            }
+            #endregion
+
+            // Submit the name when buttons are pressed
+            if (Input.GetKeyDown(KeyCode.Return) || (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A != ButtonState.Pressed))
             {
                 // Store the player's name & score in the Reward system
                 ScoreboardInfo scoreInfo = gameObject.GetComponent<Cs_RewardSystem>().GetScoreboardInfo();
@@ -299,7 +373,7 @@ public class Cs_ScoreboardLogic : MonoBehaviour
 
                 // Reload the Scoreboard & display
                 gameObject.GetComponent<Cs_RewardSystem>().SetScoreboardInformation(scoreInfo);
-                
+
 
                 VictoryTextObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
                 HighScoreNameObject.GetComponent<Text>().color = new Color(0, 0, 0, 0);
@@ -308,12 +382,6 @@ public class Cs_ScoreboardLogic : MonoBehaviour
                 StartShowScoreboard();
                 scoreboardState = ScoreboardState.Display;
             }
-            #endregion
-
-            // Accept Keypad Input
-            #region Controller Input
-        
-            #endregion
 
         }
         else if (scoreboardState == ScoreboardState.Display)

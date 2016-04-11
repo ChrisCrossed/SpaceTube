@@ -130,15 +130,20 @@ public class Player : MonoBehaviour
         bool b_LerpSlow = true;
 
         float f_LerpSpeed;
-        if (b_LerpSlow) f_LerpSpeed = 0.1f; else f_LerpSpeed = 1.0f;
+        if (b_LerpSlow) f_LerpSpeed = 0.035f; else f_LerpSpeed = 1.0f;
 
         // Easy mode
         if(accelerationMode == 0)
         {
             // Rotate the camera to match the player
             Vector3 camRot = playerCam.transform.eulerAngles;
-            print(Mathf.LerpAngle(camRot.z, avatarRotation, f_LerpSpeed));
+
             camRot.z = Mathf.LerpAngle(camRot.z, avatarRotation, f_LerpSpeed);
+            print(camRot.z + ", " + avatarRotation);
+
+            // if (avatarRotation - camRot.z > 45f && avatarRotation > 0) camRot.z = avatarRotation - 45f;
+            // else if (avatarRotation - camRot.z < -45f && avatarRotation < 360) camRot.z = avatarRotation + 45f;
+
             playerCam.transform.eulerAngles = camRot;
         }
         // Medium Difficulty
@@ -221,7 +226,6 @@ public class Player : MonoBehaviour
 
 	private void UpdateAvatarRotation ()
     {
-        print(avatarRotation);
 		rotationInput = Input.GetAxis("Horizontal");
 
         if(bAutoPlay)

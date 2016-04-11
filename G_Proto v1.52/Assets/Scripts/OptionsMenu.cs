@@ -56,12 +56,13 @@ public class OptionsMenu : MonoBehaviour {
 
   public void MuteAllAudio()
   {
+    MuteAllAudio_ = !MuteAllAudio_;
     AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
     foreach (AudioSource sound in sounds)
     {
-      sound.mute = !sound.mute;
+      sound.mute = MuteAllAudio_;
     }
-    MuteAllAudio_ = !MuteAllAudio_;
+    
   }
 
   public void MuteBGM()

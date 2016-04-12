@@ -99,6 +99,11 @@ public class Player : MonoBehaviour
         Vector3 camRot = playerCam.transform.eulerAngles;
         camRot.z = 0f;
         playerCam.transform.eulerAngles = camRot;
+
+        if(!b_CamLockedToPlayerRot)
+        {
+            ToggleCameraLock();
+        }
     }
 
 	public void Die ()
@@ -137,7 +142,10 @@ public class Player : MonoBehaviour
         if(b_CamLockedToPlayerRot) tempStr = "Camera: Locked To Ship";
         else tempStr = "Camera: Unlocked";
 
-        GameObject.Find("LockCameraButton").GetComponentInChildren<Text>().text = tempStr;
+        if(GameObject.Find("LockCameraButton"))
+        {
+            GameObject.Find("LockCameraButton").GetComponentInChildren<Text>().text = tempStr;
+        }
     }
 
     private void LateUpdate()

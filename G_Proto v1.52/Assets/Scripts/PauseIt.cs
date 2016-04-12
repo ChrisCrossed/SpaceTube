@@ -74,7 +74,7 @@ public class PauseIt : MonoBehaviour {
 
     private void Pause()
     {
-        if (bIsPaused == true)
+        if (bIsPaused == true && gPauseMenu.activeSelf == true && cPauseMenu.enabled)
         {
             Cursor.visible = false;
             Time.timeScale = 1;
@@ -84,7 +84,7 @@ public class PauseIt : MonoBehaviour {
             AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
             BGM.volume *= (10.0f / 3.0f);
         }
-        else
+        else if(bIsPaused == false)
         {
             GamePad.SetVibration(playerIndex, 0, 0);
             Cursor.visible = true;

@@ -58,6 +58,9 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     public GameObject MainMenu;
     float f_ScoreboardTimer;
 
+    public ChangeStartingButton buttonChanger;
+    public GameObject buttonTarget;
+
     PlayerIndex playerIndex;
     GamePadState state;
     GamePadState prevState;
@@ -443,6 +446,8 @@ public class Cs_ScoreboardLogic : MonoBehaviour
 
                 MainMenu.SetActive(true);
                 MainMenu.GetComponent<Canvas>().enabled = true;
+
+                buttonChanger.ChangeButton(buttonTarget);
             }
         }
     }

@@ -47,7 +47,7 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     int i_NameCounter = -1;
     int i_ScoreCounter = -1;
 
-    bool b_IsNewScore;
+    //bool b_IsNewScore;
     int i_ScorePos;
     ScoreboardState scoreboardState;
     string s_PlayerName;
@@ -71,6 +71,28 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     {
         s_PlayerName = "";
         playerIndex = PlayerIndex.One;
+        int check = PlayerPrefs.GetInt("MuteAllAudio");
+        if (check == 1)
+        {
+          AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+          foreach (AudioSource sound in sounds)
+          {
+            sound.mute = true;
+          }
+        }
+
+        check = PlayerPrefs.GetInt("MuteBGM");
+
+        if (check == 1)
+        {
+          AudioSource BGM = GameObject.Find("Scoreboard").GetComponent<AudioSource>();
+          BGM.mute = true;
+        }
+        else
+        {
+          AudioSource BGM = GameObject.Find("Scoreboard").GetComponent<AudioSource>();
+          BGM.mute = false;
+        }
 
         go_DPad = GameObject.Find("Img_DPad");
         go_LStick = GameObject.Find("Img_LStick");
@@ -126,7 +148,7 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         f_LetterTimer = -1f;
         i_NameCounter = -1;
         i_ScoreCounter = -1;
-        b_IsNewScore = false;
+        //b_IsNewScore = false;
         i_ScorePos = 0;
         s_PlayerName = "";
         f_flashTimer = 0f;

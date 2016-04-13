@@ -27,14 +27,14 @@ public class Avatar : MonoBehaviour
 {
     public GameObject DeadScreen;
     public Text ScoreLabel;
-	public ParticleSystem trail, burst;
+    public ParticleSystem trail, burst;
 
     public GameObject ScoreboardScreen;
 
     public Renderer Body, Booster;
-	public Player player;
+    public Player player;
 
-	public float deathCountdown = 1f;
+    public float deathCountdown = 1f;
     public float HP;
 
     public float currentHP;
@@ -101,10 +101,10 @@ public class Avatar : MonoBehaviour
         hud.SetHP(currentHP);
         if (isDead)
         {
-			deathCountdown -= Time.deltaTime;
+            deathCountdown -= Time.deltaTime;
             if (deathCountdown <= 0f && player.bDead == false)
             {
-				deathCountdown = 1f;
+                deathCountdown = 1f;
                 ParticleSystem.EmissionModule emTrail = trail.emission;
                 emTrail.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;

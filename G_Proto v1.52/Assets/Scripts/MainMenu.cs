@@ -36,17 +36,50 @@ public class MainMenu : MonoBehaviour
 
     public AudioClip StartNoise;
     public AudioClip EndNoise;
+    public AudioClip DefaultSong;
 
     public ChangeStartingButton ButtonChanger;
     public GameObject ButtonTarget;
 
 	private void Awake ()
     {
-		Application.targetFrameRate = 1000;    
+		Application.targetFrameRate = 1000;
+    
     }
     void OnEnable()
     {
+      bool initial = PlayerPrefs.HasKey("MuteAllAudio");
+      if (initial)
+      {
+        int check = PlayerPrefs.GetInt("MuteAllAudio");
+        if (check == 1)
+        {
+          AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+          foreach (AudioSource sound in sounds)
+          {
+            sound.mute = true;
+          }
+          AudioSource BGM = GameObject.Find("Main Menu").GetComponent<AudioSource>();
+          BGM.mute = true;
+        }
 
+        check = PlayerPrefs.GetInt("MuteBGM");
+
+        if (check == 1)
+        {
+          AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
+          BGM.mute = true;
+          BGM = GameObject.Find("Main Menu").GetComponent<AudioSource>();
+          BGM.mute = true;
+        }
+        else
+        {
+          AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
+          BGM.mute = false;
+          BGM = GameObject.Find("Main Menu").GetComponent<AudioSource>();
+          BGM.mute = false;
+        }
+      }
     }
 
 	public void StartGame (int mode)
@@ -102,8 +135,30 @@ public class MainMenu : MonoBehaviour
         player.GetComponent<SoundClass>().PlayInportedSound(StartNoise, false);
         gameObject.SetActive(false);
         BGMPlayer.GetComponent<SoundClass>().PlayInportedSound(SelectedTrack, true);
+        if(SelectedTrack == null)
+        {
+            BGMPlayer.GetComponent<SoundClass>().PlayInportedSound(DefaultSong, true);
+        }
         PauseMenu.bInGame = true;
-        
+        bool initial = PlayerPrefs.HasKey("MuteAllAudio");
+        if (initial)
+        {
+          int check = PlayerPrefs.GetInt("MuteAllAudio");
+          if (check == 1)
+          {
+            AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+            foreach (AudioSource sound in sounds)
+            {
+              sound.mute = true;
+            }
+          }
+          check = PlayerPrefs.GetInt("MuteBGM");
+          if (check == 1)
+          {
+            AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
+            BGM.mute = true;
+          }
+        }
     }
 
     IEnumerator End(float distanceTraveled)

@@ -65,13 +65,13 @@ public class Player : MonoBehaviour
     //public AudioClip DeadNoise;
 
     public PlayerIndex playerIndex;
-    GamePadState state;
+    //GamePadState state;
     //GamePadState prevState;
 
     // Camera Rotation information
     public GameObject playerCam;
     bool b_CamLockedToPlayerRot;
-    int accelerationMode;
+    //int accelerationMode;
 
     public void StartGame(int accelerationMode_)
     {
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
         iParticleAmount = 10;
 
         // Store acceleration mode
-        accelerationMode = accelerationMode_;
+        //accelerationMode = accelerationMode_;
 
         Vector3 camRot = playerCam.transform.eulerAngles;
         camRot.z = 0f;
@@ -169,7 +169,7 @@ public class Player : MonoBehaviour
 	private void Update ()
     {
         //prevState = state;
-        state = GamePad.GetState(playerIndex);
+        //state = GamePad.GetState(playerIndex);
 
         velocity += acceleration * Time.deltaTime;
 		float delta = velocity * Time.deltaTime;

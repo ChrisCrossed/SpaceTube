@@ -41,7 +41,7 @@ public class PauseIt : MonoBehaviour {
 
     public bool bInHowtoPlay;
     private bool bIsPaused;
-    private bool audioPaused;
+    //private bool audioPaused;
 
     public PlayerIndex playerIndex;
     GamePadState state;
@@ -51,8 +51,8 @@ public class PauseIt : MonoBehaviour {
     void Start ()
     {
         //bInGame = false;
-      audioPaused = false;
-	}
+      //audioPaused = false;
+	  }
 	
 	// Update is called once per frame
 	void Update ()
@@ -116,7 +116,8 @@ public class PauseIt : MonoBehaviour {
         gPauseMenu.SetActive(false);
         cPauseMenu.enabled = false;
         cHowToPlay.enabled = false;
-        
+        AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
+        BGM.volume *= (10.0f / 3.0f);
     }
 
 

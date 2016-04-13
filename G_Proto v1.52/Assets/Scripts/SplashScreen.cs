@@ -45,6 +45,40 @@ public class SplashScreen : MonoBehaviour
     private void OnEnable()
     {
         bMenuOn = false;
+        bool initial = PlayerPrefs.HasKey("MuteAllAudio");
+        if (initial)
+        {
+          int check = PlayerPrefs.GetInt("MuteAllAudio");
+          if (check == 1)
+          {
+            AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+            foreach (AudioSource sound in sounds)
+            {
+              sound.mute = true;
+            }
+          }
+          else
+          {
+            AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+            foreach (AudioSource sound in sounds)
+            {
+              sound.mute = false;
+            }
+          }
+
+          check = PlayerPrefs.GetInt("MuteBGM");
+
+          if (check == 1)
+          {
+            AudioSource BGM = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+            BGM.mute = true;
+          }
+          else
+          {
+            AudioSource BGM = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+            BGM.mute = false;
+          }
+        }
     }
 
     private void Update()

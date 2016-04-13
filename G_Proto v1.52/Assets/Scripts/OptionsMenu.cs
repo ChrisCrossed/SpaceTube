@@ -10,8 +10,41 @@ public class OptionsMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
   {
-    MuteAllAudio_ = false;
-    MuteBGM_ = false;
+
+    bool initial = PlayerPrefs.HasKey("MuteAllAudio");
+    if(initial)
+    {
+      int check = PlayerPrefs.GetInt("MuteAllAudio");
+      if(check == 0)
+      {
+        MuteAllAudio_ = false;
+      }
+      else
+      {
+        MuteAllAudio_ = true;
+        AudioSource[] sounds = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        foreach (AudioSource sound in sounds)
+        {
+          sound.mute = MuteAllAudio_;
+        }
+      }
+
+      check = PlayerPrefs.GetInt("MuteBGM");
+      if (check == 0)
+      {
+        MuteBGM_ = false;
+      }
+      else
+      {
+        MuteBGM_ = true;
+      }
+
+    }
+    else
+    {
+      PlayerPrefs.SetInt("MuteAllAudio", 0);
+      PlayerPrefs.SetInt("MuteBGM", 0);
+    }
 	}
 	
 	// Update is called once per frame
@@ -62,7 +95,17 @@ public class OptionsMenu : MonoBehaviour {
     {
       sound.mute = MuteAllAudio_;
     }
-    
+
+    if (MuteAllAudio_)
+    {
+      PlayerPrefs.SetInt("MuteAllAudio", 1);
+      PlayerPrefs.SetInt("MuteBGM", 1);
+    }
+    else
+    {
+      PlayerPrefs.SetInt("MuteAllAudio", 0);
+      PlayerPrefs.SetInt("MuteBGM", 0);
+    }
   }
 
   public void MuteBGM()
@@ -70,6 +113,10 @@ public class OptionsMenu : MonoBehaviour {
     AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
     BGM.mute = !BGM.mute;
     MuteBGM_ = !MuteBGM_;
+    if (MuteBGM_)
+      PlayerPrefs.SetInt("MuteBGM", 1);
+    else
+      PlayerPrefs.SetInt("MuteBGM", 0);
   }
 
   public void SwitchWindow()

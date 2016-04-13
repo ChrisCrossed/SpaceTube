@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G_Proto v1.52.CSharp.Plugins", "G_Proto v1.52.CSharp.Plugins.csproj", "{4A1BFC89-0E73-BDF6-984D-9B717EFE8151}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G_Proto v1.52.CSharp", "G_Proto v1.52.CSharp.csproj", "{78A716F6-1BA7-DF9D-3F5F-F71D5612F3C9}"

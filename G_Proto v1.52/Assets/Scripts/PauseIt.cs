@@ -116,7 +116,8 @@ public class PauseIt : MonoBehaviour {
         gPauseMenu.SetActive(false);
         cPauseMenu.enabled = false;
         cHowToPlay.enabled = false;
-        
+        AudioSource BGM = GameObject.Find("Shaker").GetComponent<AudioSource>();
+        BGM.volume *= (10.0f / 3.0f);
     }
 
 

@@ -62,12 +62,20 @@ public class Cs_ScoreboardLogic : MonoBehaviour
     GamePadState state;
     GamePadState prevState;
 
+    GameObject go_DPad;
+    GameObject go_LStick;
+    GameObject go_Keyboard;
+
     // Use this for initialization
     void Start()
     {
         s_PlayerName = "";
         playerIndex = PlayerIndex.One;
-        
+
+        go_DPad = GameObject.Find("Img_DPad");
+        go_LStick = GameObject.Find("Img_LStick");
+        go_Keyboard = GameObject.Find("Img_Keyboard");
+
         // StartShowScoreboard();
         // scoreboardState = ScoreboardState.Start;
     }
@@ -297,6 +305,11 @@ public class Cs_ScoreboardLogic : MonoBehaviour
         // If we are currently accepting user input...
         if (scoreboardState == ScoreboardState.ReceiveName)
         {
+            // Activate the icons
+            go_DPad.GetComponent<Image>().enabled = true;
+            go_LStick.GetComponent<Image>().enabled = true;
+            go_Keyboard.GetComponent<Image>().enabled = true;
+
             #region Keyboard Input
             // Accept Keyboard Input
             string keyInput = Input.inputString;
@@ -350,6 +363,11 @@ public class Cs_ScoreboardLogic : MonoBehaviour
             // Submit the name when buttons are pressed
             if (Input.GetKeyDown(KeyCode.Return) || (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A != ButtonState.Pressed))
             {
+                // Deactivate the icons
+                go_DPad.GetComponent<Image>().enabled = false;
+                go_LStick.GetComponent<Image>().enabled = false;
+                go_Keyboard.GetComponent<Image>().enabled = false;
+
                 // Store the player's name & score in the Reward system
                 ScoreboardInfo scoreInfo = gameObject.GetComponent<Cs_RewardSystem>().GetScoreboardInfo();
 

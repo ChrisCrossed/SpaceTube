@@ -36,6 +36,7 @@ public class MainMenu : MonoBehaviour
 
     public AudioClip StartNoise;
     public AudioClip EndNoise;
+    public AudioClip DefaultSong;
 
     public ChangeStartingButton ButtonChanger;
     public GameObject ButtonTarget;
@@ -134,6 +135,10 @@ public class MainMenu : MonoBehaviour
         player.GetComponent<SoundClass>().PlayInportedSound(StartNoise, false);
         gameObject.SetActive(false);
         BGMPlayer.GetComponent<SoundClass>().PlayInportedSound(SelectedTrack, true);
+        if(SelectedTrack == null)
+        {
+            BGMPlayer.GetComponent<SoundClass>().PlayInportedSound(DefaultSong, true);
+        }
         PauseMenu.bInGame = true;
         bool initial = PlayerPrefs.HasKey("MuteAllAudio");
         if (initial)
